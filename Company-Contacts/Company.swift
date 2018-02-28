@@ -6,9 +6,10 @@
 //  Copyright © 2018 Mac Gallagher. All rights reserved.
 //
 
-import Foundation
+//import Foundation
+//
+//struct Company {
+//    let name: String
+//    let founded: Date
+//}
 
-struct Company {
-    let name: String
-    let founded: Date
-}
