@@ -19,6 +19,14 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
     }
     
 
+    func didEditCompany(company: Company) {
+        
+        let row = companies.index(of: company)
+        
+        let reloadIndexPath = IndexPath(row: row!, section: 0)
+        tableView.reloadRows(at: [reloadIndexPath], with: .middle)
+    }
+    
     var companies = [Company]()
     
     private func fetchCompanies() {
@@ -77,7 +85,9 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
         present(navController, animated: true, completion: nil)
     }
     
+    /////////////////////////////
     // MARK: - TableView methods
+    /////////////////////////////
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView()
@@ -126,15 +136,23 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
                 print("Failed to delete company:", saveError)
             }
         }
+        deleteAction.backgroundColor = UIColor.lightRed
         
-        let editAction = UITableViewRowAction(style: .normal, title: "Edit") { (_, indexPath) in
-            print("Editing company...")
-        }
+        let editAction = UITableViewRowAction(style: .normal, title: "Edit", handler: editHandlerFunction)
+        editAction.backgroundColor = UIColor.darkBlue
         
         return [deleteAction, editAction]
     }
     
-    
+    fileprivate func editHandlerFunction(action: UITableViewRowAction, indexPath: IndexPath) {
+        print("Editing company in separate function")
+        
+        let editCompanyController = CreateCompanyController()
+        editCompanyController.delegate = self
+        editCompanyController.company = companies[indexPath.row]
+        let navController = CustomNavigationController(rootViewController: editCompanyController)
+        present(navController, animated: true, completion: nil)
+    }
     
 }
 

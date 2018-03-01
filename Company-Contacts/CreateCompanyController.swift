@@ -11,11 +11,19 @@ import CoreData
 
 protocol CreateCompanyControllerDelegate {
     func didAddCompany(company: Company)
+    func didEditCompany(company: Company)
 }
 
 class CreateCompanyController: UIViewController {
     
+    var company: Company? {
+        didSet {
+            nameTextField.text = company?.name
+        }
+    }
+    
     var delegate: CreateCompanyControllerDelegate?
+    
     
     let nameLabel: UILabel = {
         let label = UILabel()
@@ -35,9 +43,7 @@ class CreateCompanyController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
-        
-        navigationItem.title = "Create Company"
-        
+
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
@@ -46,6 +52,14 @@ class CreateCompanyController: UIViewController {
     }
     
     @objc private func handleSave() {
+        if company == nil {
+            createCompany()
+        } else {
+            saveCompanyChanges()
+        }
+    }
+    
+    private func createCompany() {
         
         // initialize core data stack
         
@@ -71,6 +85,32 @@ class CreateCompanyController: UIViewController {
         }
     }
     
+    private func saveCompanyChanges() {
+        
+        let context = CoreDataManager.shared.persistentContainer.viewContext
+        
+        company?.name = nameTextField.text
+        
+        do {
+            try context.save()
+            
+            //save succeeded
+            dismiss(animated: true, completion: {
+                self.delegate?.didEditCompany(company: self.company!)
+            })
+            
+        } catch let saveError{
+            print("Failed to save company changes:", saveError)
+        }
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // ternary syntax
+        navigationItem.title = company == nil ? "Create Company" : "Edit Company"
+    }
     
     private func setupUI() {
         let lightBlueBackgroundView = UIView()
