@@ -67,8 +67,50 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal), style: .plain
             , target: self, action: #selector(handleAddCompany))
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain
+            , target: self, action: #selector(handleReset))
     }
 
+    
+    @objc private func handleReset() {
+        print("Attempting to delete all core data objects")
+        
+        let context = CoreDataManager.shared.persistentContainer.viewContext
+        
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: Company.fetchRequest())
+        
+        do {
+            try context.execute(batchDeleteRequest)
+            
+            var indexPathToRemove = [IndexPath]()
+            
+            for (index, _) in companies.enumerated() {
+                let indexPath = IndexPath(row: index, section: 0)
+                indexPathToRemove.append(indexPath)
+            }
+            companies.removeAll()
+            tableView.deleteRows(at: indexPathToRemove, with: .left)
+            
+        } catch let deleteError {
+            print("Failed to delete objects from Core Data:", deleteError)
+        }
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.text = "No companies available..."
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        return label
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return companies.count == 0 ? 150 : 0
+    }
+    
     @objc func handleAddCompany() {
         print("Adding company...")
         

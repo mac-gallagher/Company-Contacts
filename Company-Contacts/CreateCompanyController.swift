@@ -111,7 +111,7 @@ class CreateCompanyController: UIViewController, UIImagePickerControllerDelegate
         
         view.backgroundColor = .darkBlue
     }
-    
+
     @objc private func handleSave() {
         if company == nil {
             createCompany()
