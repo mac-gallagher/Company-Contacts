@@ -34,7 +34,7 @@ class CompanyCell: UITableViewCell {
     
     let companyImageView: UIImageView = {
         let imageView = UIImageView(image: #imageLiteral(resourceName: "select_photo_empty"))
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
