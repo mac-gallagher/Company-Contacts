@@ -66,9 +66,10 @@
 		AD56D0CD2049F8E600B4AE24 /* Companies */ = {
 			isa = PBXGroup;
 			children = (
+				ADE5F8D1204B276F00649706 /* Employees */,
 				ADB9FFF52044FB6F005D4036 /* CompaniesController.swift */,
-				AD56D0CB2049F82D00B4AE24 /* CompanyCell.swift */,
 				AD7BDD89204526E000B46FC9 /* CreateCompanyController.swift */,
+				AD56D0CB2049F82D00B4AE24 /* CompanyCell.swift */,
 				ADB26069204A4A8B00F5BDD8 /* CompaniesController+CreateCompany.swift */,
 				ADB2606B204A4B6C00F5BDD8 /* CompaniesController+UITableView.swift */,
 			);
@@ -96,18 +97,25 @@
 			children = (
 				AD23F99F204A5646004967EC /* Helpers */,
 				AD56D0CD2049F8E600B4AE24 /* Companies */,
-				ADB2606D204A51CC00F5BDD8 /* EmployeesController.swift */,
-				AD23F9A2204A571F004967EC /* CreateEmployeeController.swift */,
 				ADB9FFF32044FB6F005D4036 /* AppDelegate.swift */,
 				ADB9FFF72044FB6F005D4036 /* Main.storyboard */,
 				ADB9FFFA2044FB6F005D4036 /* Assets.xcassets */,
 				ADB9FFFC2044FB6F005D4036 /* LaunchScreen.storyboard */,
 				ADB9FFFF2044FB6F005D4036 /* Info.plist */,
 				ADB90005204504E3005D4036 /* UIColor+theme.swift */,
-				ADE745A220461CB600A51206 /* Model.xcdatamodeld */,
 				ADE745A520462EF800A51206 /* CoreDataManager.swift */,
+				ADE745A220461CB600A51206 /* Model.xcdatamodeld */,
 			);
 			path = "Company-Contacts";
+			sourceTree = "<group>";
+		};
+		ADE5F8D1204B276F00649706 /* Employees */ = {
+			isa = PBXGroup;
+			children = (
+				ADB2606D204A51CC00F5BDD8 /* EmployeesController.swift */,
+				AD23F9A2204A571F004967EC /* CreateEmployeeController.swift */,
+			);
+			path = Employees;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

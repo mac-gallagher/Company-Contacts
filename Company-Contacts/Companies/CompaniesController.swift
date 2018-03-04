@@ -27,7 +27,6 @@ class CompaniesController: UITableViewController {
         
         navigationItem.title = "Companies"
         setupPlusButtonInNavBar(selector: #selector(handleAddCompany))
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain
             , target: self, action: #selector(handleReset))
     }
@@ -49,14 +48,9 @@ class CompaniesController: UITableViewController {
     }
     
     @objc func handleAddCompany() {
-        print("Adding company...")
-        
         let createCompanyController = CreateCompanyController()
-        
         let navController = CustomNavigationController(rootViewController: createCompanyController)
-        
         createCompanyController.delegate = self
-        
         present(navController, animated: true, completion: nil)
     }
     
