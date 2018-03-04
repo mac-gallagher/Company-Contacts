@@ -9,6 +9,17 @@
 import UIKit
 import CoreData
 
+//UILabel subclass for custom text drawing
+class IndentedLabel: UILabel {
+    
+    override func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+        let customRect = UIEdgeInsetsInsetRect(rect, insets)
+        super.drawText(in: customRect)
+    }
+}
+
+
 class EmployeesController: UITableViewController, CreateEmployeeControllerDelegate {
     
     var company: Company?
@@ -31,20 +42,78 @@ class EmployeesController: UITableViewController, CreateEmployeeControllerDelega
         super.viewWillAppear(animated)
         navigationItem.title = company?.name
     }
-
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = IndentedLabel()
+        if section == 0 {
+            label.text = "Short names"
+        } else if section == 1{
+            label.text = "Long names"
+        } else {
+            label.text = "Really long names"
+        }
+        label.backgroundColor = UIColor.lightBlue
+        label.textColor = UIColor.darkBlue
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        return label
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+    var shortNameEmployees = [Employee]()
+    var longNameEmployees = [Employee]()
+    var reallyLongNameEmployees = [Employee]()
+    
+    var allEmployees = [[Employee]]()
+    
     private func fetchEmployees() {
         guard let companyEmployees = company?.employees?.allObjects as? [Employee] else { return }
-        employees = companyEmployees
+        
+        shortNameEmployees = companyEmployees.filter({ (employee) -> Bool in
+            if let count = employee.name?.count {
+                return count < 6
+            }
+            return false
+        })
+        
+        longNameEmployees = companyEmployees.filter({ (employee) -> Bool in
+            if let count = employee.name?.count {
+                return count >= 6 && count <= 9
+            }
+            return false
+        })
+        
+        reallyLongNameEmployees = companyEmployees.filter({ (employee) -> Bool in
+            if let count = employee.name?.count {
+                return count > 9
+            }
+            return false
+        })
+        
+        allEmployees = [
+            shortNameEmployees,
+            longNameEmployees,
+            reallyLongNameEmployees
+        ]
+        
+        //employees = companyEmployees
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return employees.count
+        return allEmployees[section].count
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return allEmployees.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
        
-        let employee = employees[indexPath.row]
+        let employee = allEmployees[indexPath.section][indexPath.row]
+        
         cell.textLabel?.text = employee.name
         
         if let birthday = employee.employeeInformation?.birthday {
