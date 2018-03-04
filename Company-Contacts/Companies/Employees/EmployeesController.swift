@@ -45,13 +45,7 @@ class EmployeesController: UITableViewController, CreateEmployeeControllerDelega
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = IndentedLabel()
-        if section == 0 {
-            label.text = "Short names"
-        } else if section == 1{
-            label.text = "Long names"
-        } else {
-            label.text = "Really long names"
-        }
+        label.text = employeeTypes[section]
         label.backgroundColor = UIColor.lightBlue
         label.textColor = UIColor.darkBlue
         label.font = UIFont.boldSystemFont(ofSize: 16)
@@ -62,43 +56,25 @@ class EmployeesController: UITableViewController, CreateEmployeeControllerDelega
         return 50
     }
     
-    var shortNameEmployees = [Employee]()
-    var longNameEmployees = [Employee]()
-    var reallyLongNameEmployees = [Employee]()
-    
     var allEmployees = [[Employee]]()
+    
+    var employeeTypes = [
+        EmployeeType.Executive.rawValue,
+        EmployeeType.SeniorManagement.rawValue,
+        EmployeeType.Staff.rawValue
+    ]
     
     private func fetchEmployees() {
         guard let companyEmployees = company?.employees?.allObjects as? [Employee] else { return }
         
-        shortNameEmployees = companyEmployees.filter({ (employee) -> Bool in
-            if let count = employee.name?.count {
-                return count < 6
-            }
-            return false
-        })
+        allEmployees = []
         
-        longNameEmployees = companyEmployees.filter({ (employee) -> Bool in
-            if let count = employee.name?.count {
-                return count >= 6 && count <= 9
-            }
-            return false
-        })
-        
-        reallyLongNameEmployees = companyEmployees.filter({ (employee) -> Bool in
-            if let count = employee.name?.count {
-                return count > 9
-            }
-            return false
-        })
-        
-        allEmployees = [
-            shortNameEmployees,
-            longNameEmployees,
-            reallyLongNameEmployees
-        ]
-        
-        //employees = companyEmployees
+        employeeTypes.forEach { (employeeType) in
+            
+            allEmployees.append(
+                companyEmployees.filter { $0.type == employeeType }
+            )
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -140,7 +116,10 @@ class EmployeesController: UITableViewController, CreateEmployeeControllerDelega
     }
     
     func didAddEmployee(employee: Employee) {
-        employees.append(employee)
-        tableView.reloadData()
+        guard let section = employeeTypes.index(of: employee.type!) else { return }
+        let row = allEmployees[section].count
+        let insertionIndexPath = IndexPath(row: row, section: section)
+        allEmployees[section].append(employee)
+        tableView.insertRows(at: [insertionIndexPath], with: .middle)
     }
 }
