@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		AD02A97F204DFAD50084DBF0 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD02A97E204DFAD50084DBF0 /* Service.swift */; };
+		AD204E04204E1B5C0098D2A3 /* Model_1.12.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = AD204E03204E1B5C0098D2A3 /* Model_1.12.xcmappingmodel */; };
+		AD204E06204E1BF90098D2A3 /* CustomMigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD204E05204E1BF90098D2A3 /* CustomMigrationPolicy.swift */; };
 		AD23F99D204A54D3004967EC /* CompaniesController+CreateCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB26069204A4A8B00F5BDD8 /* CompaniesController+CreateCompany.swift */; };
 		AD23F99E204A54D3004967EC /* CompaniesController+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB2606B204A4B6C00F5BDD8 /* CompaniesController+UITableView.swift */; };
 		AD23F9A1204A5657004967EC /* UIViewController+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD23F9A0204A5657004967EC /* UIViewController+Helpers.swift */; };
@@ -30,6 +32,9 @@
 /* Begin PBXFileReference section */
 		AD02A97E204DFAD50084DBF0 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		AD02A980204E12AB0084DBF0 /* Model_v1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_v1.1.xcdatamodel; sourceTree = "<group>"; };
+		AD02A981204E1AAC0084DBF0 /* Model_v1. 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model_v1. 2.xcdatamodel"; sourceTree = "<group>"; };
+		AD204E03204E1B5C0098D2A3 /* Model_1.12.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model_1.12.xcmappingmodel; sourceTree = "<group>"; };
+		AD204E05204E1BF90098D2A3 /* CustomMigrationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMigrationPolicy.swift; sourceTree = "<group>"; };
 		AD23F9A0204A5657004967EC /* UIViewController+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Helpers.swift"; sourceTree = "<group>"; };
 		AD23F9A2204A571F004967EC /* CreateEmployeeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEmployeeController.swift; sourceTree = "<group>"; };
 		AD56D0CB2049F82D00B4AE24 /* CompanyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCell.swift; sourceTree = "<group>"; };
@@ -114,6 +119,8 @@
 				ADB90005204504E3005D4036 /* UIColor+theme.swift */,
 				ADE745A520462EF800A51206 /* CoreDataManager.swift */,
 				ADE745A220461CB600A51206 /* Model.xcdatamodeld */,
+				AD204E03204E1B5C0098D2A3 /* Model_1.12.xcmappingmodel */,
+				AD204E05204E1BF90098D2A3 /* CustomMigrationPolicy.swift */,
 			);
 			path = "Company-Contacts";
 			sourceTree = "<group>";
@@ -201,7 +208,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADB90006204504E3005D4036 /* UIColor+theme.swift in Sources */,
+				AD204E04204E1B5C0098D2A3 /* Model_1.12.xcmappingmodel in Sources */,
 				AD23F9A3204A571F004967EC /* CreateEmployeeController.swift in Sources */,
+				AD204E06204E1BF90098D2A3 /* CustomMigrationPolicy.swift in Sources */,
 				AD02A97F204DFAD50084DBF0 /* Service.swift in Sources */,
 				AD23F99D204A54D3004967EC /* CompaniesController+CreateCompany.swift in Sources */,
 				AD23F99E204A54D3004967EC /* CompaniesController+UITableView.swift in Sources */,
@@ -404,10 +413,11 @@
 		ADE745A220461CB600A51206 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				AD02A981204E1AAC0084DBF0 /* Model_v1. 2.xcdatamodel */,
 				AD02A980204E12AB0084DBF0 /* Model_v1.1.xcdatamodel */,
 				ADE745A320461CB600A51206 /* Model.xcdatamodel */,
 			);
-			currentVersion = AD02A980204E12AB0084DBF0 /* Model_v1.1.xcdatamodel */;
+			currentVersion = AD02A981204E1AAC0084DBF0 /* Model_v1. 2.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
