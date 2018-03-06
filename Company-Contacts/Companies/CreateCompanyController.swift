@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 
 protocol CreateCompanyControllerDelegate {
     func didAddCompany(company: Company)
@@ -60,14 +59,13 @@ class CreateCompanyController: UIViewController, UIImagePickerControllerDelegate
         return imageView
     }()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
         setupUI()
     }
     
-    @objc fileprivate func handleSelectPhoto() {
+    @objc private func handleSelectPhoto() {
         let imagePickerController = UIImagePickerController()
         imagePickerController.allowsEditing = true
         imagePickerController.delegate = self
@@ -97,39 +95,21 @@ class CreateCompanyController: UIViewController, UIImagePickerControllerDelegate
     }
     
     private func createCompany() {
-        let context = CoreDataManager.shared.persistentContainer.viewContext
-        let company = NSEntityDescription.insertNewObject(forEntityName: "Company", into: context)
-        
-        company.setValue(nameTextField.text, forKey: "name")
-        company.setValue(datePicker.date, forKey: "founded")
-        
-        if let companyImage = companyImageView.image {
-            let imageData = UIImageJPEGRepresentation(companyImage, 0.8)
-            company.setValue(imageData, forKey: "imageData")
-        }
-        
-        // perform the save
-        
+        guard let name = nameTextField.text, let image = companyImageView.image else { return }
         do {
-            try context.save()
-            
-            //success
+            let company = try CoreDataManager.shared.createCompany(companyName: name, foundedDate: datePicker.date, companyImage: image)
             dismiss(animated: true
                 , completion: {
-                    self.delegate?.didAddCompany(company: company as! Company)
+                    self.delegate?.didAddCompany(company: company)
             })
-            
-        } catch let saveErr{
-            print("Failed to save company:", saveErr)
+        } catch let createError{
+            print("Failed to create company in Core Data:", createError)
         }
     }
     
     private func saveCompanyChanges() {
-        
-        let context = CoreDataManager.shared.persistentContainer.viewContext
-        
-        company?.name = nameTextField.text
-        company?.founded = datePicker.date
+        company!.name = nameTextField.text
+        company!.founded = datePicker.date
         
         if let companyImage = companyImageView.image {
             let imageData = UIImageJPEGRepresentation(companyImage, 0.8)
@@ -137,23 +117,18 @@ class CreateCompanyController: UIViewController, UIImagePickerControllerDelegate
         }
         
         do {
-            try context.save()
-            
-            //save succeeded
-            dismiss(animated: true, completion: {
-                self.delegate?.didEditCompany(company: self.company!)
+            try CoreDataManager.shared.updateCompany(company: company!, completion: {
+                dismiss(animated: true) {
+                    self.delegate?.didEditCompany(company: self.company!)
+                }
             })
-            
-        } catch let saveError{
+        } catch let saveError {
             print("Failed to save company changes:", saveError)
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // ternary syntax
         navigationItem.title = company == nil ? "Create Company" : "Edit Company"
     }
 

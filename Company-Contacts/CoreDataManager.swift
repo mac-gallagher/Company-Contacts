@@ -34,14 +34,31 @@ struct CoreDataManager {
         }
     }
     
-    //TODO: Create company in Core Data
     func createCompany(companyName: String, foundedDate: Date, companyImage: UIImage) throws -> Company {
-        return Company(context: persistentContainer.viewContext)
+        let context = persistentContainer.viewContext
+        let company = Company(context: context)
+        company.name = companyName
+        company.founded = foundedDate
+    
+        let imageData = UIImageJPEGRepresentation(companyImage, 0.8)
+        company.imageData = imageData
+        
+        do {
+            try context.save()
+            return company
+        } catch {
+            throw error
+        }
     }
     
-    //TODO: Update company in Core Data
-    func updateCompany(company: Company) throws -> Company{
-        return Company(context: persistentContainer.viewContext)
+    func updateCompany(company: Company, completion: () -> ()) throws {
+        let context = persistentContainer.viewContext
+        do {
+            try context.save()
+            completion()
+        } catch {
+            throw error
+        }
     }
     
     func deleteCompany(company: Company, completion: () -> ()) throws {
