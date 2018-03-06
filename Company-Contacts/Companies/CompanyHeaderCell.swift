@@ -44,7 +44,6 @@ class CompanyHeaderCell: UITableViewCell {
         nameLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
         nameLabel.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         nameLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

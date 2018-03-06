@@ -11,20 +11,19 @@ import UIKit
 
 struct CoreDataManager {
     
-    static let shared = CoreDataManager() // will live forever as long as application is still running, its properties will too
+    static let shared = CoreDataManager()
     
-    let persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Model")
-        container.loadPersistentStores { (storeDescription, err) in
+    let context: NSManagedObjectContext = {
+        let persistentContainer = NSPersistentContainer(name: "Model")
+        persistentContainer.loadPersistentStores { (storeDescription, err) in
             if let err = err {
                 fatalError("Loading of store failed: \(err)")
             }
         }
-        return container
+        return persistentContainer.viewContext
     }()
     
     func fetchCompanies() throws -> [Company] {
-        let context = persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<Company>(entityName: "Company")
         do {
             let companies = try context.fetch(fetchRequest)
@@ -35,7 +34,6 @@ struct CoreDataManager {
     }
     
     func createCompany(companyName: String, foundedDate: Date, companyImage: UIImage) throws -> Company {
-        let context = persistentContainer.viewContext
         let company = Company(context: context)
         company.name = companyName
         company.founded = foundedDate
@@ -52,7 +50,6 @@ struct CoreDataManager {
     }
     
     func updateCompany(company: Company, completion: () -> ()) throws {
-        let context = persistentContainer.viewContext
         do {
             try context.save()
             completion()
@@ -62,7 +59,6 @@ struct CoreDataManager {
     }
     
     func deleteCompany(company: Company, completion: () -> ()) throws {
-        let context = persistentContainer.viewContext
         context.delete(company)
         do {
             try context.save()
@@ -73,7 +69,6 @@ struct CoreDataManager {
     }
     
     func deleteAllCompanies(completion: () -> ()) throws {
-        let context = persistentContainer.viewContext
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: Company.fetchRequest())
         do {
             try context.execute(batchDeleteRequest)
@@ -84,8 +79,6 @@ struct CoreDataManager {
     }
     
     func createEmployee(employeeName: String, employeeType: String, company: Company, birthday: Date) throws -> Employee {
-        let context = persistentContainer.viewContext
-        
         let employee = Employee(context: context)
         employee.company = company
         employee.type = employeeType

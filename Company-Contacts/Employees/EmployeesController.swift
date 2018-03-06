@@ -35,9 +35,7 @@ class EmployeesController: UITableViewController, CreateEmployeeControllerDelega
         tableView.backgroundColor = UIColor.darkBlue
         tableView.tableFooterView = UIView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
-        
         setupPlusButtonInNavBar(selector: #selector(handleAdd))
-        
         fetchEmployees()
     }
     
@@ -62,7 +60,6 @@ class EmployeesController: UITableViewController, CreateEmployeeControllerDelega
         createEmployeeController.company = company
         let navController = UINavigationController(rootViewController: createEmployeeController)
         present(navController, animated: true, completion: nil)
-
     }
     
     func didAddEmployee(employee: Employee) {

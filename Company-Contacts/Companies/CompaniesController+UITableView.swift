@@ -83,5 +83,4 @@ extension CompaniesController {
         return companies.count
     }
     
-    
 }

@@ -36,8 +36,8 @@ class CompanyCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
-//        imageView.layer.borderColor = UIColor.darkBlue.cgColor
-//        imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = UIColor.darkBlue.cgColor
+        imageView.layer.borderWidth = 1
         
         return imageView
     }()
