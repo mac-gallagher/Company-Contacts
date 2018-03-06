@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD02A97F204DFAD50084DBF0 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD02A97E204DFAD50084DBF0 /* Service.swift */; };
 		AD23F99D204A54D3004967EC /* CompaniesController+CreateCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB26069204A4A8B00F5BDD8 /* CompaniesController+CreateCompany.swift */; };
 		AD23F99E204A54D3004967EC /* CompaniesController+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB2606B204A4B6C00F5BDD8 /* CompaniesController+UITableView.swift */; };
 		AD23F9A1204A5657004967EC /* UIViewController+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD23F9A0204A5657004967EC /* UIViewController+Helpers.swift */; };
 		AD23F9A3204A571F004967EC /* CreateEmployeeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD23F9A2204A571F004967EC /* CreateEmployeeController.swift */; };
 		AD56D0CC2049F82D00B4AE24 /* CompanyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD56D0CB2049F82D00B4AE24 /* CompanyCell.swift */; };
 		AD6D7AE4204C876E00752A33 /* EmployeeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6D7AE3204C876E00752A33 /* EmployeeType.swift */; };
+		AD771818204DDE95004D48BD /* CompaniesAutoUpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD771817204DDE95004D48BD /* CompaniesAutoUpdateController.swift */; };
 		AD7BDD8A204526E000B46FC9 /* CreateCompanyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7BDD89204526E000B46FC9 /* CreateCompanyController.swift */; };
 		ADB2606E204A51CC00F5BDD8 /* EmployeesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB2606D204A51CC00F5BDD8 /* EmployeesController.swift */; };
 		ADB90006204504E3005D4036 /* UIColor+theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB90005204504E3005D4036 /* UIColor+theme.swift */; };
@@ -26,10 +28,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AD02A97E204DFAD50084DBF0 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		AD02A980204E12AB0084DBF0 /* Model_v1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model_v1.1.xcdatamodel; sourceTree = "<group>"; };
 		AD23F9A0204A5657004967EC /* UIViewController+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Helpers.swift"; sourceTree = "<group>"; };
 		AD23F9A2204A571F004967EC /* CreateEmployeeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEmployeeController.swift; sourceTree = "<group>"; };
 		AD56D0CB2049F82D00B4AE24 /* CompanyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCell.swift; sourceTree = "<group>"; };
 		AD6D7AE3204C876E00752A33 /* EmployeeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeType.swift; sourceTree = "<group>"; };
+		AD771817204DDE95004D48BD /* CompaniesAutoUpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesAutoUpdateController.swift; sourceTree = "<group>"; };
 		AD7BDD89204526E000B46FC9 /* CreateCompanyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCompanyController.swift; sourceTree = "<group>"; };
 		ADB26069204A4A8B00F5BDD8 /* CompaniesController+CreateCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompaniesController+CreateCompany.swift"; sourceTree = "<group>"; };
 		ADB2606B204A4B6C00F5BDD8 /* CompaniesController+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompaniesController+UITableView.swift"; sourceTree = "<group>"; };
@@ -71,9 +76,11 @@
 				ADE5F8D1204B276F00649706 /* Employees */,
 				ADB9FFF52044FB6F005D4036 /* CompaniesController.swift */,
 				AD7BDD89204526E000B46FC9 /* CreateCompanyController.swift */,
+				AD771817204DDE95004D48BD /* CompaniesAutoUpdateController.swift */,
 				AD56D0CB2049F82D00B4AE24 /* CompanyCell.swift */,
 				ADB26069204A4A8B00F5BDD8 /* CompaniesController+CreateCompany.swift */,
 				ADB2606B204A4B6C00F5BDD8 /* CompaniesController+UITableView.swift */,
+				AD02A97E204DFAD50084DBF0 /* Service.swift */,
 			);
 			path = Companies;
 			sourceTree = "<group>";
@@ -195,6 +202,7 @@
 			files = (
 				ADB90006204504E3005D4036 /* UIColor+theme.swift in Sources */,
 				AD23F9A3204A571F004967EC /* CreateEmployeeController.swift in Sources */,
+				AD02A97F204DFAD50084DBF0 /* Service.swift in Sources */,
 				AD23F99D204A54D3004967EC /* CompaniesController+CreateCompany.swift in Sources */,
 				AD23F99E204A54D3004967EC /* CompaniesController+UITableView.swift in Sources */,
 				AD7BDD8A204526E000B46FC9 /* CreateCompanyController.swift in Sources */,
@@ -204,6 +212,7 @@
 				ADB2606E204A51CC00F5BDD8 /* EmployeesController.swift in Sources */,
 				AD23F9A1204A5657004967EC /* UIViewController+Helpers.swift in Sources */,
 				ADE745A620462EF800A51206 /* CoreDataManager.swift in Sources */,
+				AD771818204DDE95004D48BD /* CompaniesAutoUpdateController.swift in Sources */,
 				ADE745A420461CB600A51206 /* Model.xcdatamodeld in Sources */,
 				AD6D7AE4204C876E00752A33 /* EmployeeType.swift in Sources */,
 			);
@@ -395,9 +404,10 @@
 		ADE745A220461CB600A51206 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				AD02A980204E12AB0084DBF0 /* Model_v1.1.xcdatamodel */,
 				ADE745A320461CB600A51206 /* Model.xcdatamodel */,
 			);
-			currentVersion = ADE745A320461CB600A51206 /* Model.xcdatamodel */;
+			currentVersion = AD02A980204E12AB0084DBF0 /* Model_v1.1.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
