@@ -11,7 +11,6 @@ import UIKit
 extension CompaniesController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let company = companies[indexPath.row]
         let employeesController = EmployeesController()
         employeesController.company = company
@@ -19,33 +18,26 @@ extension CompaniesController {
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (_, indexPath) in
-            
-            let company = self.companies[indexPath.row]
-            self.companies.remove(at: indexPath.row)
-            self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            
-            let context = CoreDataManager.shared.persistentContainer.viewContext
-            
-            context.delete(company)
-            
-            do {
-                try context.save()
-            } catch let saveError{
-                print("Failed to delete company:", saveError)
-            }
-        }
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: deleteHandlerFunction)
         deleteAction.backgroundColor = UIColor.lightRed
-        
         let editAction = UITableViewRowAction(style: .normal, title: "Edit", handler: editHandlerFunction)
         editAction.backgroundColor = UIColor.darkBlue
-        
         return [deleteAction, editAction]
     }
     
+    private func deleteHandlerFunction(action: UITableViewRowAction, indexPath: IndexPath) {
+        let company = self.companies[indexPath.row]
+        do {
+            try CoreDataManager.shared.deleteCompany(company: company) {
+                companies.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+        } catch let deleteError {
+            print("Unable to delete company from Core Data:", deleteError)
+        }
+    }
+    
     private func editHandlerFunction(action: UITableViewRowAction, indexPath: IndexPath) {
-        
         let editCompanyController = CreateCompanyController()
         editCompanyController.delegate = self
         editCompanyController.company = companies[indexPath.row]
@@ -67,7 +59,6 @@ extension CompaniesController {
         cell.company = company
         return cell
     }
-    
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let label = UILabel()

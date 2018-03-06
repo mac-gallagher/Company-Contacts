@@ -77,16 +77,13 @@ class CreateEmployeeController: UIViewController {
         
         guard let employeeType = employeeTypeSegmentedControl.titleForSegment(at: employeeTypeSegmentedControl.selectedSegmentIndex) else { return }
         
-        let tuple = CoreDataManager.shared.createEmployee(employeeName: employeeName, employeeType: employeeType, company: company, birthday: birthdayDate)
-        
-        if let error = tuple.1 {
-            //present error modal of some kind
-            // perhaps use a UIAlertController to show your error message
-            print("Failed to create employee: ", error)
-        }
-        
-        dismiss(animated: true) {
-        self.delegate?.didAddEmployee(employee: tuple.0!)
+        do {
+            let employee = try CoreDataManager.shared.createEmployee(employeeName: employeeName, employeeType: employeeType, company: company, birthday: birthdayDate)
+            dismiss(animated: true) {
+                self.delegate?.didAddEmployee(employee: employee)
+            }
+        } catch {
+            print("Failed to create employee in Core Data: ", error)
         }
     }
     

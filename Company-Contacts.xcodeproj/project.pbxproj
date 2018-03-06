@@ -23,6 +23,9 @@
 		ADE745A420461CB600A51206 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ADE745A220461CB600A51206 /* Model.xcdatamodeld */; };
 		ADE745A620462EF800A51206 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE745A520462EF800A51206 /* CoreDataManager.swift */; };
 		ADE9488A204E39DE00329892 /* CompanyHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE94889204E39DE00329892 /* CompanyHeaderCell.swift */; };
+		ADE9488C204E4D8E00329892 /* EmployeesController+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9488B204E4D8E00329892 /* EmployeesController+UITableView.swift */; };
+		ADE9488E204E54A500329892 /* CompaniesController+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9488D204E54A500329892 /* CompaniesController+UI.swift */; };
+		ADE94890204E608200329892 /* CreateCompanyController+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9488F204E608200329892 /* CreateCompanyController+UI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +47,9 @@
 		ADE745A320461CB600A51206 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		ADE745A520462EF800A51206 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		ADE94889204E39DE00329892 /* CompanyHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyHeaderCell.swift; sourceTree = "<group>"; };
+		ADE9488B204E4D8E00329892 /* EmployeesController+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmployeesController+UITableView.swift"; sourceTree = "<group>"; };
+		ADE9488D204E54A500329892 /* CompaniesController+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompaniesController+UI.swift"; sourceTree = "<group>"; };
+		ADE9488F204E608200329892 /* CreateCompanyController+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateCompanyController+UI.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,9 +76,11 @@
 			children = (
 				ADE5F8D1204B276F00649706 /* Employees */,
 				ADB9FFF52044FB6F005D4036 /* CompaniesController.swift */,
+				ADE9488D204E54A500329892 /* CompaniesController+UI.swift */,
 				ADB2606B204A4B6C00F5BDD8 /* CompaniesController+UITableView.swift */,
 				ADB26069204A4A8B00F5BDD8 /* CompaniesController+CreateCompany.swift */,
 				AD7BDD89204526E000B46FC9 /* CreateCompanyController.swift */,
+				ADE9488F204E608200329892 /* CreateCompanyController+UI.swift */,
 				AD56D0CB2049F82D00B4AE24 /* CompanyCell.swift */,
 				ADE94889204E39DE00329892 /* CompanyHeaderCell.swift */,
 			);
@@ -115,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				ADB2606D204A51CC00F5BDD8 /* EmployeesController.swift */,
+				ADE9488B204E4D8E00329892 /* EmployeesController+UITableView.swift */,
 				AD23F9A2204A571F004967EC /* CreateEmployeeController.swift */,
 				AD6D7AE3204C876E00752A33 /* EmployeeType.swift */,
 			);
@@ -194,11 +203,14 @@
 			files = (
 				ADE9488A204E39DE00329892 /* CompanyHeaderCell.swift in Sources */,
 				ADB90006204504E3005D4036 /* UIColor+theme.swift in Sources */,
+				ADE9488C204E4D8E00329892 /* EmployeesController+UITableView.swift in Sources */,
 				AD23F9A3204A571F004967EC /* CreateEmployeeController.swift in Sources */,
 				AD23F99D204A54D3004967EC /* CompaniesController+CreateCompany.swift in Sources */,
+				ADE9488E204E54A500329892 /* CompaniesController+UI.swift in Sources */,
 				AD23F99E204A54D3004967EC /* CompaniesController+UITableView.swift in Sources */,
 				AD7BDD8A204526E000B46FC9 /* CreateCompanyController.swift in Sources */,
 				AD56D0CC2049F82D00B4AE24 /* CompanyCell.swift in Sources */,
+				ADE94890204E608200329892 /* CreateCompanyController+UI.swift in Sources */,
 				ADB9FFF62044FB6F005D4036 /* CompaniesController.swift in Sources */,
 				ADB9FFF42044FB6F005D4036 /* AppDelegate.swift in Sources */,
 				ADB2606E204A51CC00F5BDD8 /* EmployeesController.swift in Sources */,

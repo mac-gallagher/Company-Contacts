@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 
 class CompaniesController: UITableViewController {
    
@@ -15,28 +14,20 @@ class CompaniesController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        companies = CoreDataManager.shared.fetchCompanies()
-        
-        view.backgroundColor = .white
-        
-        tableView.backgroundColor = .darkBlue
-        tableView.separatorColor = .white
-        tableView.tableFooterView = UIView()
-        tableView.register(CompanyCell.self, forCellReuseIdentifier: "cellId")
-        
-        navigationItem.title = "Companies"
+        do {
+            companies = try CoreDataManager.shared.fetchCompanies()
+        } catch let fetchError {
+            print("Failed to fetch companies from Core Data:", fetchError)
+        }
         setupPlusButtonInNavBar(selector: #selector(handleAddCompany))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain
             , target: self, action: #selector(handleReset))
+        setupUI()
     }
 
-
     @objc private func handleReset() {
-        CoreDataManager.shared.deleteAllCompanies { (error) in
-            if error != nil {
-                // maybe show a user-frendly messsage here...
-            } else {
+        do {
+            try CoreDataManager.shared.deleteAllCompanies {
                 var indexPathsToRemove = [IndexPath]()
                 for (index, _) in companies.enumerated() {
                     indexPathsToRemove.append(IndexPath(row: index, section: 0))
@@ -44,6 +35,8 @@ class CompaniesController: UITableViewController {
                 companies.removeAll()
                 tableView.deleteRows(at: indexPathsToRemove, with: .left)
             }
+        } catch let deleteError {
+            print("Unable to delete companies from Core Data:", deleteError)
         }
     }
     

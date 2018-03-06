@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import UIKit
 
 struct CoreDataManager {
     
@@ -22,58 +23,68 @@ struct CoreDataManager {
         return container
     }()
     
-    func fetchCompanies() -> [Company] {
+    func fetchCompanies() throws -> [Company] {
         let context = persistentContainer.viewContext
-        
         let fetchRequest = NSFetchRequest<Company>(entityName: "Company")
-        
         do {
             let companies = try context.fetch(fetchRequest)
             return companies
-        } catch let fetchErr {
-            print("Failed to fetch companies:", fetchErr)
-            return []
+        } catch {
+            throw error
         }
     }
     
-     func deleteAllCompanies(completion: (_ error: String?) -> ()) {
+    //TODO: Create company in Core Data
+    func createCompany(companyName: String, foundedDate: Date, companyImage: UIImage) throws -> Company {
+        return Company(context: persistentContainer.viewContext)
+    }
+    
+    //TODO: Update company in Core Data
+    func updateCompany(company: Company) throws -> Company{
+        return Company(context: persistentContainer.viewContext)
+    }
+    
+    func deleteCompany(company: Company, completion: () -> ()) throws {
+        let context = persistentContainer.viewContext
+        context.delete(company)
+        do {
+            try context.save()
+            completion()
+        } catch {
+            throw error
+        }
+    }
+    
+    func deleteAllCompanies(completion: () -> ()) throws {
         let context = persistentContainer.viewContext
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: Company.fetchRequest())
         do {
             try context.execute(batchDeleteRequest)
-            completion(nil)
-        } catch let delErr {
-            let error = "Failed to batch delete companies: \(delErr)"
-            completion(error)
+            completion()
+        } catch {
+            throw error
         }
     }
     
-    func createEmployee(employeeName: String, employeeType: String, company: Company, birthday: Date) -> (Employee?, Error?) {
+    func createEmployee(employeeName: String, employeeType: String, company: Company, birthday: Date) throws -> Employee {
         let context = persistentContainer.viewContext
         
-        let employee = NSEntityDescription.insertNewObject(forEntityName: "Employee", into: context) as! Employee
-        
+        let employee = Employee(context: context)
         employee.company = company
         employee.type = employeeType
+        employee.name = employeeName
         
-        employee.setValue(employeeName, forKey: "name")
-        
-        let employeeInformation = NSEntityDescription.insertNewObject(forEntityName: "EmployeeInformation", into: context) as! EmployeeInformation
-       
+        let employeeInformation = EmployeeInformation(context: context)
         employee.employeeInformation = employeeInformation
         employee.employeeInformation?.birthday = birthday
         
         do {
             try context.save()
-            return (employee, nil)
-        } catch let saveError {
-            return (nil, saveError)
+            return employee
+        } catch {
+            throw error
         }
     }
-    
-    
-    
-    
     
     
 }
