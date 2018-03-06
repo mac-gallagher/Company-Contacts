@@ -19,7 +19,6 @@ class IndentedLabel: UILabel {
     }
 }
 
-
 class EmployeesController: UITableViewController, CreateEmployeeControllerDelegate {
     
     var company: Company?
@@ -29,9 +28,10 @@ class EmployeesController: UITableViewController, CreateEmployeeControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.backgroundColor = UIColor.darkBlue
-        setupPlusButtonInNavBar(selector: #selector(handleAdd))
-        
+        tableView.tableFooterView = UIView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        
+        setupPlusButtonInNavBar(selector: #selector(handleAdd))
         
         fetchEmployees()
     }

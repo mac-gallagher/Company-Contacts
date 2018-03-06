@@ -18,11 +18,11 @@
 		ADB90006204504E3005D4036 /* UIColor+theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB90005204504E3005D4036 /* UIColor+theme.swift */; };
 		ADB9FFF42044FB6F005D4036 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9FFF32044FB6F005D4036 /* AppDelegate.swift */; };
 		ADB9FFF62044FB6F005D4036 /* CompaniesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9FFF52044FB6F005D4036 /* CompaniesController.swift */; };
-		ADB9FFF92044FB6F005D4036 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADB9FFF72044FB6F005D4036 /* Main.storyboard */; };
 		ADB9FFFB2044FB6F005D4036 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADB9FFFA2044FB6F005D4036 /* Assets.xcassets */; };
 		ADB9FFFE2044FB6F005D4036 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADB9FFFC2044FB6F005D4036 /* LaunchScreen.storyboard */; };
 		ADE745A420461CB600A51206 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ADE745A220461CB600A51206 /* Model.xcdatamodeld */; };
 		ADE745A620462EF800A51206 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE745A520462EF800A51206 /* CoreDataManager.swift */; };
+		ADE9488A204E39DE00329892 /* CompanyHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE94889204E39DE00329892 /* CompanyHeaderCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,12 +38,12 @@
 		ADB9FFF02044FB6F005D4036 /* Company-Contacts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Company-Contacts.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADB9FFF32044FB6F005D4036 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ADB9FFF52044FB6F005D4036 /* CompaniesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesController.swift; sourceTree = "<group>"; };
-		ADB9FFF82044FB6F005D4036 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ADB9FFFA2044FB6F005D4036 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ADB9FFFD2044FB6F005D4036 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ADB9FFFF2044FB6F005D4036 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADE745A320461CB600A51206 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		ADE745A520462EF800A51206 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		ADE94889204E39DE00329892 /* CompanyHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyHeaderCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,10 +70,11 @@
 			children = (
 				ADE5F8D1204B276F00649706 /* Employees */,
 				ADB9FFF52044FB6F005D4036 /* CompaniesController.swift */,
+				ADB2606B204A4B6C00F5BDD8 /* CompaniesController+UITableView.swift */,
+				ADB26069204A4A8B00F5BDD8 /* CompaniesController+CreateCompany.swift */,
 				AD7BDD89204526E000B46FC9 /* CreateCompanyController.swift */,
 				AD56D0CB2049F82D00B4AE24 /* CompanyCell.swift */,
-				ADB26069204A4A8B00F5BDD8 /* CompaniesController+CreateCompany.swift */,
-				ADB2606B204A4B6C00F5BDD8 /* CompaniesController+UITableView.swift */,
+				ADE94889204E39DE00329892 /* CompanyHeaderCell.swift */,
 			);
 			path = Companies;
 			sourceTree = "<group>";
@@ -100,7 +101,6 @@
 				AD23F99F204A5646004967EC /* Helpers */,
 				AD56D0CD2049F8E600B4AE24 /* Companies */,
 				ADB9FFF32044FB6F005D4036 /* AppDelegate.swift */,
-				ADB9FFF72044FB6F005D4036 /* Main.storyboard */,
 				ADB9FFFA2044FB6F005D4036 /* Assets.xcassets */,
 				ADB9FFFC2044FB6F005D4036 /* LaunchScreen.storyboard */,
 				ADB9FFFF2044FB6F005D4036 /* Info.plist */,
@@ -182,7 +182,6 @@
 			files = (
 				ADB9FFFE2044FB6F005D4036 /* LaunchScreen.storyboard in Resources */,
 				ADB9FFFB2044FB6F005D4036 /* Assets.xcassets in Resources */,
-				ADB9FFF92044FB6F005D4036 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +192,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADE9488A204E39DE00329892 /* CompanyHeaderCell.swift in Sources */,
 				ADB90006204504E3005D4036 /* UIColor+theme.swift in Sources */,
 				AD23F9A3204A571F004967EC /* CreateEmployeeController.swift in Sources */,
 				AD23F99D204A54D3004967EC /* CompaniesController+CreateCompany.swift in Sources */,
@@ -212,14 +212,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		ADB9FFF72044FB6F005D4036 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				ADB9FFF82044FB6F005D4036 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		ADB9FFFC2044FB6F005D4036 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
