@@ -7,7 +7,6 @@
 //
 
 import CoreData
-import UIKit
 
 struct CoreDataManager {
     
@@ -33,14 +32,11 @@ struct CoreDataManager {
         }
     }
     
-    func createCompany(companyName: String, foundedDate: Date, companyImage: UIImage) throws -> Company {
+    func createCompany(companyName: String, foundedDate: Date, imageData: Data) throws -> Company {
         let company = Company(context: context)
         company.name = companyName
         company.founded = foundedDate
-    
-        let imageData = UIImageJPEGRepresentation(companyImage, 0.8)
         company.imageData = imageData
-        
         do {
             try context.save()
             return company
@@ -96,5 +92,23 @@ struct CoreDataManager {
         }
     }
     
+    func deleteEmployee() {
+        
+    }
+    
+    func updateEmployee() {
+        
+    }
+    
+    
+    
+    
+    
+    
     
 }
+
+
+
+
+

@@ -33,15 +33,12 @@ extension EmployeesController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-        
         let employee = allEmployees[indexPath.section][indexPath.row]
-        
         cell.textLabel?.text = employee.name
         
         if let birthday = employee.employeeInformation?.birthday {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM/dd/yyyy"
-            
             cell.textLabel?.text = "\(employee.name ?? "") \(dateFormatter.string(from: birthday))"
         }
         

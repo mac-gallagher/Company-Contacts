@@ -29,39 +29,23 @@ class CreateCompanyController: UIViewController, UIImagePickerControllerDelegate
     
     var delegate: CreateCompanyControllerDelegate?
     
-    let nameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Name"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    let nameLabel = UILabel()
+    let nameTextField = UITextField()
+    let datePicker = UIDatePicker()
+    let companyImageView = UIImageView(image: #imageLiteral(resourceName: "select_photo_empty"))
     
-    let nameTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Enter name"
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
-    }()
-    
-    let datePicker: UIDatePicker = {
-        let dp = UIDatePicker()
-        dp.translatesAutoresizingMaskIntoConstraints = false
-        dp.datePickerMode = .date
-        return dp
-    }()
-    
-    lazy var companyImageView: UIImageView = {
-        let imageView = UIImageView(image: #imageLiteral(resourceName: "select_photo_empty"))
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.isUserInteractionEnabled = true
-        imageView.contentMode = .scaleAspectFill
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectPhoto)))
-        return imageView
-    }()
+    var saveButton: UIBarButtonItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
+        
+        saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
+        navigationItem.rightBarButtonItem = saveButton
+        
+        companyImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectPhoto)))
+        nameTextField.addTarget(self, action: #selector(nameFieldDidChange), for: UIControlEvents.editingChanged)
+        
+        nameFieldDidChange()
         setupUI()
     }
     
@@ -70,6 +54,22 @@ class CreateCompanyController: UIViewController, UIImagePickerControllerDelegate
         imagePickerController.allowsEditing = true
         imagePickerController.delegate = self
         present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    @objc private func handleSave() {
+        if company == nil {
+            createCompany()
+        } else {
+            saveCompanyChanges()
+        }
+    }
+    
+    @objc func nameFieldDidChange() {
+        if nameTextField.text == "" {
+            saveButton?.isEnabled = false
+        } else {
+            saveButton?.isEnabled = true
+        }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -86,18 +86,15 @@ class CreateCompanyController: UIViewController, UIImagePickerControllerDelegate
         dismiss(animated: true, completion: nil)
     }
 
-    @objc private func handleSave() {
-        if company == nil {
-            createCompany()
-        } else {
-            saveCompanyChanges()
-        }
-    }
     
     private func createCompany() {
-        guard let name = nameTextField.text, let image = companyImageView.image else { return }
+        guard
+            let name = nameTextField.text,
+            let image = companyImageView.image,
+            let imageData = UIImageJPEGRepresentation(image, 0.8)
+            else { return }
         do {
-            let company = try CoreDataManager.shared.createCompany(companyName: name, foundedDate: datePicker.date, companyImage: image)
+            let company = try CoreDataManager.shared.createCompany(companyName: name, foundedDate: datePicker.date, imageData: imageData)
             dismiss(animated: true
                 , completion: {
                     self.delegate?.didAddCompany(company: company)
