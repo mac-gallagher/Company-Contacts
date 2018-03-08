@@ -13,7 +13,7 @@ protocol CreateCompanyControllerDelegate {
     func didEditCompany(company: Company)
 }
 
-class CreateCompanyController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CreateCompanyController: UIViewController {
     
     var company: Company? {
         didSet {
@@ -29,10 +29,13 @@ class CreateCompanyController: UIViewController, UIImagePickerControllerDelegate
     
     var delegate: CreateCompanyControllerDelegate?
     
+    let companyImageView = UIImageView(image: #imageLiteral(resourceName: "select_photo_empty"))
+    let selectImageButton = UIButton(type: .system)
     let nameLabel = UILabel()
+    let dateLabel = UILabel()
+    let foundedLabel = UILabel()
     let nameTextField = UITextField()
     let datePicker = UIDatePicker()
-    let companyImageView = UIImageView(image: #imageLiteral(resourceName: "select_photo_empty"))
     
     var saveButton: UIBarButtonItem?
     
@@ -42,11 +45,17 @@ class CreateCompanyController: UIViewController, UIImagePickerControllerDelegate
         saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
         navigationItem.rightBarButtonItem = saveButton
         
-        companyImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectPhoto)))
+        selectImageButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectPhoto)))
         nameTextField.addTarget(self, action: #selector(nameFieldDidChange), for: UIControlEvents.editingChanged)
+        datePicker.addTarget(self, action: #selector(dateDidChange), for: UIControlEvents.valueChanged)
         
         nameFieldDidChange()
         setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.title = company == nil ? "Create Company" : "Edit Company"
     }
     
     @objc private func handleSelectPhoto() {
@@ -64,29 +73,20 @@ class CreateCompanyController: UIViewController, UIImagePickerControllerDelegate
         }
     }
     
-    @objc func nameFieldDidChange() {
+    @objc private func dateDidChange() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd, yyyy"
+        dateLabel.text = dateFormatter.string(from: datePicker.date)
+    }
+    
+    @objc private func nameFieldDidChange() {
         if nameTextField.text == "" {
             saveButton?.isEnabled = false
         } else {
             saveButton?.isEnabled = true
         }
     }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
-            companyImageView.image = editedImage
-        } else if let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            companyImageView.image = originalImage
-        }
-        setupCircularImageStyle()
-        dismiss(animated: true, completion: nil)
-    }
 
-    
     private func createCompany() {
         guard
             let name = nameTextField.text,
@@ -122,11 +122,6 @@ class CreateCompanyController: UIViewController, UIImagePickerControllerDelegate
         } catch let saveError {
             print("Failed to save company changes:", saveError)
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationItem.title = company == nil ? "Create Company" : "Edit Company"
     }
 
 }

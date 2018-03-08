@@ -38,8 +38,8 @@ extension EmployeesController {
         
         if let birthday = employee.employeeInformation?.birthday {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/yyyy"
-            cell.textLabel?.text = "\(employee.name ?? "") \(dateFormatter.string(from: birthday))"
+            dateFormatter.dateFormat = "MMM dd, yyyy"
+            cell.textLabel?.text = "\(employee.name ?? "") - Birthday: \(dateFormatter.string(from: birthday))"
         }
         
         cell.backgroundColor = .tealColor

@@ -12,11 +12,35 @@ extension CreateCompanyController {
     
     func setupUI() {
         view.backgroundColor = .darkBlue
+        
+        _ = setupLightBlueBackgroundView(height: 450)
+        
         nameLabel.text = "Name"
+        nameLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        nameLabel.textColor = UIColor.darkBlue
+        
+        foundedLabel.text = "Founded"
+        foundedLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        foundedLabel.textColor = UIColor.darkBlue
+        
         nameTextField.placeholder = "Enter name"
+        nameTextField.textColor = UIColor.darkBlue
+        nameTextField.font = UIFont.systemFont(ofSize: 16)
         
         datePicker.datePickerMode = .date
-    
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd, yyyy"
+        dateLabel.text = dateFormatter.string(from: datePicker.date)
+        dateLabel.textColor = UIColor.darkBlue
+        dateLabel.font = UIFont.systemFont(ofSize: 16)
+        
+        selectImageButton.setTitle("Select Photo", for: .normal)
+        selectImageButton.layer.borderWidth = 1
+        selectImageButton.layer.borderColor = UIColor.darkBlue.cgColor
+        selectImageButton.layer.cornerRadius = 5
+        selectImageButton.setTitleColor(UIColor.darkBlue, for: .normal)
+        selectImageButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        
         companyImageView.isUserInteractionEnabled = true
         companyImageView.contentMode = .scaleAspectFill
         
@@ -28,12 +52,10 @@ extension CreateCompanyController {
         companyImageView.layer.cornerRadius = companyImageView.frame.width / 2
         companyImageView.clipsToBounds = true
         companyImageView.layer.borderColor = UIColor.darkBlue.cgColor
-        companyImageView.layer.borderWidth = 2
+        companyImageView.layer.borderWidth = 1
     }
     
     func performAutoLayout() {
-        
-        let lightBlueBackgroundView = setupLightBlueBackgroundView(height: 350)
         
         view.addSubview(companyImageView)
         companyImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -42,12 +64,19 @@ extension CreateCompanyController {
         companyImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         companyImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         
+        view.addSubview(selectImageButton)
+        selectImageButton.translatesAutoresizingMaskIntoConstraints = false
+        selectImageButton.topAnchor.constraint(equalTo: companyImageView.bottomAnchor, constant: 8).isActive = true
+        selectImageButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
+        selectImageButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
+        selectImageButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
         view.addSubview(nameLabel)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.topAnchor.constraint(equalTo: companyImageView.bottomAnchor).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: selectImageButton.bottomAnchor, constant: 8).isActive = true
         nameLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
         nameLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        nameLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        nameLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         view.addSubview(nameTextField)
         nameTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -56,12 +85,26 @@ extension CreateCompanyController {
         nameTextField.bottomAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
         nameTextField.topAnchor.constraint(equalTo: nameLabel.topAnchor).isActive = true
         
+        view.addSubview(foundedLabel)
+        foundedLabel.translatesAutoresizingMaskIntoConstraints = false
+        foundedLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
+        foundedLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
+        foundedLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        foundedLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        view.addSubview(dateLabel)
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
+        dateLabel.leftAnchor.constraint(equalTo: foundedLabel.rightAnchor).isActive = true
+        dateLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        dateLabel.bottomAnchor.constraint(equalTo: foundedLabel.bottomAnchor).isActive = true
+        dateLabel.topAnchor.constraint(equalTo: foundedLabel.topAnchor).isActive = true
+       
         view.addSubview(datePicker)
         datePicker.translatesAutoresizingMaskIntoConstraints = false
-        datePicker.topAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
+        datePicker.topAnchor.constraint(equalTo: foundedLabel.bottomAnchor, constant: 8).isActive = true
         datePicker.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         datePicker.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        datePicker.bottomAnchor.constraint(equalTo: lightBlueBackgroundView.bottomAnchor).isActive = true
+        datePicker.heightAnchor.constraint(equalToConstant: 150).isActive = true //change this once custom datepicker implemented
         
     }
     

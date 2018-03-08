@@ -21,7 +21,7 @@ class CompanyHeaderCell: UITableViewCell {
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Names"
+        label.text = "Employees"
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = UIColor.darkBlue
         label.translatesAutoresizingMaskIntoConstraints = false

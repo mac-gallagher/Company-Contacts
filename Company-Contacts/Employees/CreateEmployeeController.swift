@@ -12,7 +12,7 @@ protocol CreateEmployeeControllerDelegate {
     func didAddEmployee(employee: Employee)
 }
 
-class CreateEmployeeController: UIViewController {
+class CreateEmployeeController: UIViewController, UITextFieldDelegate {
     
     var company: Company?
     
@@ -30,6 +30,7 @@ class CreateEmployeeController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
+        birthdayTextField.delegate = self
         setupUI()
     }
     
@@ -38,7 +39,10 @@ class CreateEmployeeController: UIViewController {
         guard let company = company else { return }
         guard let birthdayText = birthdayTextField.text else { return }
         
-        performFormValidation(birthdayText: birthdayText, employeeName: employeeName)
+        if birthdayText.isEmpty {
+            showError(title: "Add Birthday", message: "Please enter a birthday.")
+            return
+        }
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
@@ -60,19 +64,19 @@ class CreateEmployeeController: UIViewController {
         }
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let maxLength = 10
+        let currentString: NSString = textField.text! as NSString
+        let newString: NSString =
+            currentString.replacingCharacters(in: range, with: string) as NSString
+        return newString.length <= maxLength
+    }
+    
     private func showError(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         present(alertController, animated: true, completion: nil)
     }
-    
-    func performFormValidation(birthdayText: String, employeeName: String) {
-        if birthdayText.isEmpty {
-            showError(title: "Add Birthday", message: "Please enter a birthday.")
-            return
-        }
-    }
-    
     
     
     
