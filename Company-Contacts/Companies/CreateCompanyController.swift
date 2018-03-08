@@ -13,7 +13,7 @@ protocol CreateCompanyControllerDelegate {
     func didEditCompany(company: Company)
 }
 
-class CreateCompanyController: UIViewController {
+class CreateCompanyController: UIViewController, UITextFieldDelegate {
     
     var company: Company? {
         didSet {
@@ -41,13 +41,14 @@ class CreateCompanyController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
         navigationItem.rightBarButtonItem = saveButton
-        
         selectImageButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectPhoto)))
         nameTextField.addTarget(self, action: #selector(nameFieldDidChange), for: UIControlEvents.editingChanged)
         datePicker.addTarget(self, action: #selector(dateDidChange), for: UIControlEvents.valueChanged)
+        
+        nameTextField.delegate = self
+        nameTextField.autocorrectionType = .no
         
         nameFieldDidChange()
         setupUI()
@@ -122,6 +123,11 @@ class CreateCompanyController: UIViewController {
         } catch let saveError {
             print("Failed to save company changes:", saveError)
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 
 }

@@ -31,6 +31,8 @@ class CreateEmployeeController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
         birthdayTextField.delegate = self
+        nameTextField.autocorrectionType = .no
+        nameTextField.delegate = self
         setupUI()
     }
     
@@ -78,7 +80,10 @@ class CreateEmployeeController: UIViewController, UITextFieldDelegate {
         present(alertController, animated: true, completion: nil)
     }
     
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
     
     
 }
