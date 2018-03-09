@@ -8,12 +8,12 @@
 
 import UIKit
 
-class CompanyHeaderCell: UITableViewCell {
+class HeaderCell: UITableViewCell {
     
     let userIcon: UIImageView = {
-        let imageView = UIImageView(image: #imageLiteral(resourceName: "user"))
+        let imageView = UIImageView()
         imageView.tintColor = .white
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
         return imageView
@@ -21,21 +21,23 @@ class CompanyHeaderCell: UITableViewCell {
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Employees"
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = UIColor.darkBlue
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    init(title: String, icon: UIImage, frame: CGRect, style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        userIcon.image = icon
+        nameLabel.text = title
         
         backgroundColor = .lightBlue
         
         addSubview(userIcon)
-        userIcon.heightAnchor.constraint(equalToConstant: 22).isActive = true
-        userIcon.widthAnchor.constraint(equalToConstant: 22).isActive = true
+        userIcon.heightAnchor.constraint(equalToConstant: frame.height).isActive = true
+        userIcon.widthAnchor.constraint(equalToConstant: frame.width).isActive = true
         userIcon.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         userIcon.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         

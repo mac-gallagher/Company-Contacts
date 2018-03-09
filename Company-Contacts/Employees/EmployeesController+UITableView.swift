@@ -11,12 +11,8 @@ import UIKit
 extension EmployeesController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = IndentedLabel()
-        label.text = employeeTypes[section]
-        label.backgroundColor = UIColor.lightBlue
-        label.textColor = UIColor.darkBlue
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        return label
+        let headerTitle = employeeTypes[section]
+        return HeaderCell(title: headerTitle, icon: #imageLiteral(resourceName: "people"), frame: CGRect(x: 0, y: 0, width: 35, height: 22), style: .default, reuseIdentifier: "headerId")
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

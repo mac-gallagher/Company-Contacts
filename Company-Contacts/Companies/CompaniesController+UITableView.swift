@@ -46,7 +46,8 @@ extension CompaniesController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return CompanyHeaderCell()
+        return HeaderCell(title: "Names", icon: #imageLiteral(resourceName: "user"), frame: CGRect(x: 0, y: 0, width: 22, height: 22), style: .default, reuseIdentifier: "headerId")
+        
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

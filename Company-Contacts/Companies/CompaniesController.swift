@@ -22,6 +22,8 @@ class CompaniesController: UITableViewController {
         setupPlusButtonInNavBar(selector: #selector(handleAddCompany))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain
             , target: self, action: #selector(handleReset))
+        tableView.register(CompanyCell.self, forCellReuseIdentifier: "cellId")
+        
         setupUI()
     }
 

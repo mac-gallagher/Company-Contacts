@@ -68,5 +68,6 @@ class EmployeesController: UITableViewController, CreateEmployeeControllerDelega
         let insertionIndexPath = IndexPath(row: row, section: section)
         allEmployees[section].append(employee)
         tableView.insertRows(at: [insertionIndexPath], with: .middle)
+        tableView.reloadData()
     }
 }

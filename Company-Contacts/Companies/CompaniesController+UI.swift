@@ -16,7 +16,6 @@ extension CompaniesController {
         tableView.backgroundColor = .darkBlue
         tableView.separatorColor = .white
         tableView.tableFooterView = UIView()
-        tableView.register(CompanyCell.self, forCellReuseIdentifier: "cellId")
     }
     
 }

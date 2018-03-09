@@ -13,7 +13,7 @@ extension CreateCompanyController {
     func setupUI() {
         view.backgroundColor = .darkBlue
         
-        _ = setupLightBlueBackgroundView(height: 450)
+        _ = setupLightBlueBackgroundView(height: 425)
         
         nameLabel.text = "Name"
         nameLabel.font = UIFont.boldSystemFont(ofSize: 16)
@@ -46,10 +46,11 @@ extension CreateCompanyController {
         
         setupCancelButton()
         performAutoLayout()
+        setupCircularImageStyle()
     }
     
     func setupCircularImageStyle() {
-        companyImageView.layer.cornerRadius = companyImageView.frame.width / 2
+        companyImageView.layer.cornerRadius = 50
         companyImageView.clipsToBounds = true
         companyImageView.layer.borderColor = UIColor.darkBlue.cgColor
         companyImageView.layer.borderWidth = 1
@@ -104,7 +105,7 @@ extension CreateCompanyController {
         datePicker.topAnchor.constraint(equalTo: foundedLabel.bottomAnchor, constant: 8).isActive = true
         datePicker.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         datePicker.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        datePicker.heightAnchor.constraint(equalToConstant: 150).isActive = true //change this once custom datepicker implemented
+        datePicker.heightAnchor.constraint(equalToConstant: 175).isActive = true 
         
     }
     

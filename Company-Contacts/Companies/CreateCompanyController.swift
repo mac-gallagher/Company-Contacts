@@ -29,7 +29,7 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
     
     var delegate: CreateCompanyControllerDelegate?
     
-    let companyImageView = UIImageView(image: #imageLiteral(resourceName: "select_photo_empty"))
+    let companyImageView = UIImageView(image: #imageLiteral(resourceName: "empty_photo"))
     let selectImageButton = UIButton(type: .system)
     let nameLabel = UILabel()
     let dateLabel = UILabel()
@@ -44,9 +44,9 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
         saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
         navigationItem.rightBarButtonItem = saveButton
         selectImageButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectPhoto)))
-        nameTextField.addTarget(self, action: #selector(nameFieldDidChange), for: UIControlEvents.editingChanged)
         datePicker.addTarget(self, action: #selector(dateDidChange), for: UIControlEvents.valueChanged)
-        
+        datePicker.maximumDate = Date()
+        nameTextField.addTarget(self, action: #selector(nameFieldDidChange), for: UIControlEvents.editingChanged)
         nameTextField.delegate = self
         nameTextField.autocorrectionType = .no
         
@@ -128,6 +128,10 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 
 }

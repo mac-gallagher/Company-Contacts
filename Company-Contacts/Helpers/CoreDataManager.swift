@@ -92,6 +92,8 @@ struct CoreDataManager {
         }
     }
     
+    //TODO: - Implement these functions
+    
     func deleteEmployee() {
         
     }
@@ -99,9 +101,6 @@ struct CoreDataManager {
     func updateEmployee() {
         
     }
-    
-    
-    
     
     
     

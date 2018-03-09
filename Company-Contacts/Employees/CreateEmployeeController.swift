@@ -27,12 +27,20 @@ class CreateEmployeeController: UIViewController, UITextFieldDelegate {
         EmployeeType.SeniorManagement.rawValue,
         EmployeeType.Staff.rawValue])
     
+    var saveButton: UIBarButtonItem?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
+        saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
+        navigationItem.rightBarButtonItem = saveButton
         birthdayTextField.delegate = self
         nameTextField.autocorrectionType = .no
         nameTextField.delegate = self
+        nameTextField.addTarget(self, action: #selector(nameFieldDidChange), for: UIControlEvents.editingChanged)
+        birthdayTextField.keyboardType = .numbersAndPunctuation
+        birthdayTextField.autocorrectionType = .no
+        
+        nameFieldDidChange()
         setupUI()
     }
     
@@ -74,6 +82,14 @@ class CreateEmployeeController: UIViewController, UITextFieldDelegate {
         return newString.length <= maxLength
     }
     
+    @objc private func nameFieldDidChange() {
+        if nameTextField.text == "" {
+            saveButton?.isEnabled = false
+        } else {
+            saveButton?.isEnabled = true
+        }
+    }
+    
     private func showError(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
@@ -83,6 +99,10 @@ class CreateEmployeeController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     

@@ -31,7 +31,7 @@ class CompanyCell: UITableViewCell {
     }
     
     let companyImageView: UIImageView = {
-        let imageView = UIImageView(image:#imageLiteral(resourceName: "select_photo_empty"))
+        let imageView = UIImageView(image:#imageLiteral(resourceName: "empty_photo"))
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 20
@@ -44,7 +44,6 @@ class CompanyCell: UITableViewCell {
     
     let nameFoundedDateLabel: UILabel = {
         let label = UILabel()
-        label.text = "Text"
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
