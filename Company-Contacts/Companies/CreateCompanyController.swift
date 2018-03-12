@@ -135,3 +135,21 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
     }
 
 }
+
+extension CreateCompanyController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+            companyImageView.image = editedImage
+        } else if let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            companyImageView.image = originalImage
+        }
+        setupCircularImageStyle()
+        dismiss(animated: true, completion: nil)
+    }
+    
+}

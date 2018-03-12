@@ -12,7 +12,7 @@ extension EmployeesController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerTitle = employeeTypes[section]
-        return HeaderCell(title: headerTitle, icon: #imageLiteral(resourceName: "people"), frame: CGRect(x: 0, y: 0, width: 35, height: 22), style: .default, reuseIdentifier: "headerId")
+        return HeaderCell(title: headerTitle, icon: #imageLiteral(resourceName: "people"), imageFrame: CGRect(x: 0, y: 0, width: 35, height: 22), style: .default, reuseIdentifier: "headerId")
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

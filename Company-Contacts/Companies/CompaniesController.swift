@@ -23,7 +23,6 @@ class CompaniesController: UITableViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain
             , target: self, action: #selector(handleReset))
         tableView.register(CompanyCell.self, forCellReuseIdentifier: "cellId")
-        
         setupUI()
     }
 
@@ -47,6 +46,14 @@ class CompaniesController: UITableViewController {
         let navController = CustomNavigationController(rootViewController: createCompanyController)
         createCompanyController.delegate = self
         present(navController, animated: true, completion: nil)
+    }
+    
+    func setupUI() {
+        view.backgroundColor = .white
+        navigationItem.title = "Companies"
+        tableView.backgroundColor = .darkBlue
+        tableView.separatorColor = .white
+        tableView.tableFooterView = UIView()
     }
     
 }

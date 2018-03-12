@@ -27,7 +27,7 @@ class HeaderCell: UITableViewCell {
         return label
     }()
     
-    init(title: String, icon: UIImage, frame: CGRect, style: UITableViewCellStyle, reuseIdentifier: String?) {
+    init(title: String, icon: UIImage, imageFrame: CGRect, style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         userIcon.image = icon
@@ -36,8 +36,8 @@ class HeaderCell: UITableViewCell {
         backgroundColor = .lightBlue
         
         addSubview(userIcon)
-        userIcon.heightAnchor.constraint(equalToConstant: frame.height).isActive = true
-        userIcon.widthAnchor.constraint(equalToConstant: frame.width).isActive = true
+        userIcon.heightAnchor.constraint(equalToConstant: imageFrame.height).isActive = true
+        userIcon.widthAnchor.constraint(equalToConstant: imageFrame.width).isActive = true
         userIcon.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         userIcon.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
