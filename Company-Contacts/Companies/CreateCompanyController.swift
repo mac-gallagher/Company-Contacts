@@ -132,13 +132,11 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         datePicker.isUserInteractionEnabled = false
-        selectImageButton.isUserInteractionEnabled = false
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.nameTextField.endEditing(true)
         datePicker.isUserInteractionEnabled = true
-        selectImageButton.isUserInteractionEnabled = true
     }
 
 }

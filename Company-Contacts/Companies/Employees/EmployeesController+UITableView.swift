@@ -57,5 +57,38 @@ extension EmployeesController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        var tableIsEmpty = true
+        for employeeType in allEmployees {
+            if employeeType.count != 0 {
+                tableIsEmpty = false
+                break
+            }
+        }
+        if tableIsEmpty && section == 0 {
+            return 150
+        }
+        return 0
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if section == 0 {
+            let footer = EmptyTableFooter()
+            footer.setUpperText(text: "No employees available")
+            footer.setLowerText(lines: ["Create some new employees by using the Add","button at the top"])
+            return footer
+        }
+        return nil
+    }
+    
+    
+    
+    
+    
     
 }
+
+
+
+
+
