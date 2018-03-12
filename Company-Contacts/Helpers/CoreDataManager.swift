@@ -92,18 +92,15 @@ struct CoreDataManager {
         }
     }
     
-    //TODO: - Implement these functions
-    
-    func deleteEmployee() {
-        
+    func deleteEmployee(employee: Employee, completion: () -> ()) throws {
+        context.delete(employee)
+        do {
+            try context.save()
+            completion()
+        } catch {
+            throw error
+        }
     }
-    
-    func updateEmployee() {
-        
-    }
-    
-    
-    
     
 }
 

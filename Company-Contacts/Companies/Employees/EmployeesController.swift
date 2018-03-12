@@ -12,7 +12,6 @@ import CoreData
 class EmployeesController: UITableViewController, CreateEmployeeControllerDelegate {
     
     var company: Company?
-    var employees = [Employee]()
     let cellId = "cellId"
     var allEmployees = [[Employee]]()
     var employeeTypes = [
