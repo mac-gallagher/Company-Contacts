@@ -27,17 +27,26 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
     }
 
     @objc private func handleReset() {
-        do {
-            try CoreDataManager.shared.deleteAllCompanies {
-                var indexPathsToRemove = [IndexPath]()
-                for (index, _) in companies.enumerated() {
-                    indexPathsToRemove.append(IndexPath(row: index, section: 0))
+        if companies.count > 0 {
+            let alertController = UIAlertController(title: "Delete All Companies", message: "Are you sure you want to remove all companies from the list? This action cannot be undone.", preferredStyle: .alert)
+            let deleteAction = UIAlertAction(title: "Delete All", style: .destructive) { (action) in
+                do {
+                    try CoreDataManager.shared.deleteAllCompanies {
+                        var indexPathsToRemove = [IndexPath]()
+                        for (index, _) in self.companies.enumerated() {
+                            indexPathsToRemove.append(IndexPath(row: index, section: 0))
+                        }
+                        self.companies.removeAll()
+                        self.tableView.deleteRows(at: indexPathsToRemove, with: .left)
+                    }
+                } catch let deleteError {
+                    print("Unable to delete companies from Core Data:", deleteError)
                 }
-                companies.removeAll()
-                tableView.deleteRows(at: indexPathsToRemove, with: .left)
             }
-        } catch let deleteError {
-            print("Unable to delete companies from Core Data:", deleteError)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+            alertController.addAction(cancelAction)
+            alertController.addAction(deleteAction)
+            present(alertController, animated: true, completion: nil)
         }
     }
     
