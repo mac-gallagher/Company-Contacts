@@ -23,6 +23,7 @@ extension CreateCompanyController {
         foundedLabel.font = UIFont.boldSystemFont(ofSize: 16)
         foundedLabel.textColor = UIColor.darkBlue
         
+        nameTextField.autocapitalizationType = .words
         nameTextField.placeholder = "Enter name"
         nameTextField.textColor = UIColor.darkBlue
         nameTextField.font = UIFont.systemFont(ofSize: 16)

@@ -18,11 +18,12 @@ extension CreateEmployeeController {
     
         nameLabel.text = "Name"
        
+        nameTextField.autocapitalizationType = .words
         nameTextField.placeholder = "Enter name"
       
         birthdayLabel.text = "Birthday"
        
-        birthdayTextField.placeholder = "MM/dd/yyyy"
+        birthdayTextField.placeholder = "MM/DD/YYYY"
       
         employeeTypeSegmentedControl.selectedSegmentIndex = 0
         employeeTypeSegmentedControl.tintColor = UIColor.darkBlue
