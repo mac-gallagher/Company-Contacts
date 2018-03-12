@@ -57,7 +57,11 @@ class EmployeesController: UITableViewController, CreateEmployeeControllerDelega
         let row = allEmployees[section].count
         let insertionIndexPath = IndexPath(row: row, section: section)
         allEmployees[section].append(employee)
-        tableView.insertRows(at: [insertionIndexPath], with: .middle)
-        tableView.reloadData()
+        UIView.animate(withDuration: 0.3, delay: 0,
+                       options: [], animations: {
+                        self.tableView.insertRows(at: [insertionIndexPath], with: .automatic)
+        }, completion: { _ in
+            self.tableView.reloadData()
+        })
     }
 }

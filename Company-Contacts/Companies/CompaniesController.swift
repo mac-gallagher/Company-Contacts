@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CompaniesController: UITableViewController {
+class CompaniesController: UITableViewController, CreateCompanyControllerDelegate {
    
     var companies = [Company]()
     
@@ -54,6 +54,18 @@ class CompaniesController: UITableViewController {
         tableView.backgroundColor = .darkBlue
         tableView.separatorColor = UIColor.lightBlue
         tableView.tableFooterView = UIView()
+    }
+    
+    func didAddCompany(company: Company) {
+        companies.append(company)
+        let newIndexPath = IndexPath(row: companies.count - 1, section: 0)
+        tableView.insertRows(at: [newIndexPath], with: .automatic)
+    }
+    
+    func didEditCompany(company: Company) {
+        let row = companies.index(of: company)
+        let reloadIndexPath = IndexPath(row: row!, section: 0)
+        tableView.reloadRows(at: [reloadIndexPath], with: .middle)
     }
     
 }
