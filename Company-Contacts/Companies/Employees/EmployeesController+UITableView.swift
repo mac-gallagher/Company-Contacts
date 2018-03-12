@@ -28,20 +28,8 @@ extension EmployeesController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-        let employee = allEmployees[indexPath.section][indexPath.row]
-        cell.textLabel?.text = employee.name
-        
-        if let birthday = employee.employeeInformation?.birthday {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MMM dd, yyyy"
-            cell.textLabel?.text = "\(employee.name ?? "") - Birthday: \(dateFormatter.string(from: birthday))"
-        }
-        
-        cell.backgroundColor = .tealColor
-        cell.textLabel?.textColor = .white
-        cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! EmployeeCell
+        cell.employee = allEmployees[indexPath.section][indexPath.row]
         return cell
     }
 }

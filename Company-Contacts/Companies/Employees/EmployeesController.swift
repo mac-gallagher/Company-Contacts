@@ -9,15 +9,6 @@
 import UIKit
 import CoreData
 
-class IndentedLabel: UILabel {
-    
-    override func drawText(in rect: CGRect) {
-        let insets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
-        let customRect = UIEdgeInsetsInsetRect(rect, insets)
-        super.drawText(in: customRect)
-    }
-}
-
 class EmployeesController: UITableViewController, CreateEmployeeControllerDelegate {
     
     var company: Company?
@@ -34,7 +25,7 @@ class EmployeesController: UITableViewController, CreateEmployeeControllerDelega
         super.viewDidLoad()
         tableView.backgroundColor = UIColor.darkBlue
         tableView.tableFooterView = UIView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(EmployeeCell.self, forCellReuseIdentifier: cellId)
         setupPlusButtonInNavBar(selector: #selector(handleAdd))
         fetchEmployees()
     }

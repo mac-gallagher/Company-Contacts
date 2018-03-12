@@ -52,7 +52,7 @@ class CompaniesController: UITableViewController {
         view.backgroundColor = .white
         navigationItem.title = "Companies"
         tableView.backgroundColor = .darkBlue
-        tableView.separatorColor = .white
+        tableView.separatorColor = UIColor.lightBlue
         tableView.tableFooterView = UIView()
     }
     
