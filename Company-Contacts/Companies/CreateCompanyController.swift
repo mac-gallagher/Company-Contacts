@@ -8,11 +8,6 @@
 
 import UIKit
 
-protocol CreateCompanyControllerDelegate {
-    func didAddCompany(company: Company)
-    func didEditCompany(company: Company)
-}
-
 class CreateCompanyController: UIViewController, UITextFieldDelegate {
     
     var company: Company? {
@@ -26,8 +21,6 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
             datePicker.date = founded
         }
     }
-    
-    var delegate: CreateCompanyControllerDelegate?
     
     let companyImageView = UIImageView(image: #imageLiteral(resourceName: "empty_photo"))
     let selectImageButton = UIButton(type: .system)
@@ -68,9 +61,13 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
     
     @objc private func handleSave() {
         if company == nil {
-            createCompany()
+            dismiss(animated: true) {
+                self.createCompany()
+            }
         } else {
-            saveCompanyChanges()
+            dismiss(animated: true) {
+                self.saveCompanyChanges()
+            }
         }
     }
     
@@ -94,12 +91,9 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
             let image = companyImageView.image,
             let imageData = UIImageJPEGRepresentation(image, 0.8)
             else { return }
+        
         do {
-            let company = try CoreDataManager.shared.createCompany(companyName: name, foundedDate: datePicker.date, imageData: imageData)
-            dismiss(animated: true
-                , completion: {
-                    self.delegate?.didAddCompany(company: company)
-            })
+            try CoreDataManager.shared.createCompany(companyName: name, foundedDate: self.datePicker.date, imageData: imageData)
         } catch let createError{
             print("Failed to create company in Core Data:", createError)
         }
@@ -113,16 +107,11 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
             let imageData = UIImageJPEGRepresentation(companyImage, 0.8)
             company?.imageData = imageData
         }
-        
         do {
-            try CoreDataManager.shared.updateCompany(company: company!, completion: {
-                dismiss(animated: true) {
-                    self.delegate?.didEditCompany(company: self.company!)
-                }
-            })
-        } catch let saveError {
-            print("Failed to save company changes:", saveError)
-        }
+            try CoreDataManager.shared.saveCompanies()
+            } catch let saveError {
+                print("Failed to update company changes:", saveError)
+            }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

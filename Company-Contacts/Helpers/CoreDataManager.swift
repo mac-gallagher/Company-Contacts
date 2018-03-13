@@ -22,43 +22,30 @@ struct CoreDataManager {
         return persistentContainer.viewContext
     }()
     
-    func fetchCompanies() throws -> [Company] {
-        let fetchRequest = NSFetchRequest<Company>(entityName: "Company")
-        do {
-            let companies = try context.fetch(fetchRequest)
-            return companies
-        } catch {
-            throw error
-        }
-    }
-    
-    func createCompany(companyName: String, foundedDate: Date, imageData: Data) throws -> Company {
+    func createCompany(companyName: String, foundedDate: Date, imageData: Data) throws {
         let company = Company(context: context)
         company.name = companyName
         company.founded = foundedDate
         company.imageData = imageData
         do {
             try context.save()
-            return company
         } catch {
             throw error
         }
     }
     
-    func updateCompany(company: Company, completion: () -> ()) throws {
+    func saveCompanies() throws {
         do {
             try context.save()
-            completion()
         } catch {
             throw error
         }
     }
     
-    func deleteCompany(company: Company, completion: () -> ()) throws {
+    func deleteCompany(company: Company) throws {
         context.delete(company)
         do {
             try context.save()
-            completion()
         } catch {
             throw error
         }
@@ -68,6 +55,7 @@ struct CoreDataManager {
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: Company.fetchRequest())
         do {
             try context.execute(batchDeleteRequest)
+            context.reset()
             completion()
         } catch {
             throw error

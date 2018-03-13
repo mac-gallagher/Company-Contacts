@@ -11,7 +11,7 @@ import UIKit
 extension CompaniesController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let company = companies[indexPath.row]
+        let company = fetchedResultsController.object(at: indexPath)
         let employeesController = EmployeesController()
         employeesController.company = company
         navigationController?.pushViewController(employeesController, animated: true)
@@ -26,28 +26,24 @@ extension CompaniesController {
     }
     
     private func deleteHandlerFunction(action: UITableViewRowAction, indexPath: IndexPath) {
-        let company = self.companies[indexPath.row]
+        let company = fetchedResultsController.object(at: indexPath)
         do {
-            try CoreDataManager.shared.deleteCompany(company: company) {
-                companies.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-            }
+            try CoreDataManager.shared.deleteCompany(company: company)
         } catch let deleteError {
-            print("Unable to delete company from Core Data:", deleteError)
+            print("Unable to delete company from persistent store:", deleteError)
         }
     }
     
     private func editHandlerFunction(action: UITableViewRowAction, indexPath: IndexPath) {
+        let company = fetchedResultsController.object(at: indexPath)
         let editCompanyController = CreateCompanyController()
-        editCompanyController.delegate = self
-        editCompanyController.company = companies[indexPath.row]
+        editCompanyController.company = company
         let navController = CustomNavigationController(rootViewController: editCompanyController)
         present(navController, animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return HeaderCell(title: "Names", icon: #imageLiteral(resourceName: "user"), imageFrame: CGRect(x: 0, y: 0, width: 22, height: 22), style: .default, reuseIdentifier: "headerId")
-        
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -56,7 +52,7 @@ extension CompaniesController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! CompanyCell
-        let company = companies[indexPath.row]
+        let company = fetchedResultsController.object(at: indexPath)
         cell.company = company
         return cell
     }
@@ -69,7 +65,7 @@ extension CompaniesController {
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return companies.count == 0 ? 150 : 0
+        return fetchedResultsController.fetchedObjects?.count == 0 ? 150 : 0
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -77,7 +73,7 @@ extension CompaniesController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return companies.count
+        return fetchedResultsController.fetchedObjects?.count ?? 0
     }
 
 }

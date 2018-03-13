@@ -27,6 +27,7 @@
 		ADE9488C204E4D8E00329892 /* EmployeesController+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9488B204E4D8E00329892 /* EmployeesController+UITableView.swift */; };
 		ADE94890204E608200329892 /* CreateCompanyController+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9488F204E608200329892 /* CreateCompanyController+UI.swift */; };
 		ADE94892204E89C600329892 /* CreateEmployeeController+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE94891204E89C600329892 /* CreateEmployeeController+UI.swift */; };
+		ADF7201F20579FA0005FBE6C /* CompaniesController+FetchedResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF7201E20579FA0005FBE6C /* CompaniesController+FetchedResults.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		ADE9488B204E4D8E00329892 /* EmployeesController+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmployeesController+UITableView.swift"; sourceTree = "<group>"; };
 		ADE9488F204E608200329892 /* CreateCompanyController+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateCompanyController+UI.swift"; sourceTree = "<group>"; };
 		ADE94891204E89C600329892 /* CreateEmployeeController+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateEmployeeController+UI.swift"; sourceTree = "<group>"; };
+		ADF7201E20579FA0005FBE6C /* CompaniesController+FetchedResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompaniesController+FetchedResults.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 			children = (
 				ADB9FFF52044FB6F005D4036 /* CompaniesController.swift */,
 				ADB2606B204A4B6C00F5BDD8 /* CompaniesController+UITableView.swift */,
+				ADF7201E20579FA0005FBE6C /* CompaniesController+FetchedResults.swift */,
 				AD7BDD89204526E000B46FC9 /* CreateCompanyController.swift */,
 				ADE9488F204E608200329892 /* CreateCompanyController+UI.swift */,
 				AD56D0CB2049F82D00B4AE24 /* CompanyCell.swift */,
@@ -222,6 +225,7 @@
 				ADE745A620462EF800A51206 /* CoreDataManager.swift in Sources */,
 				ADE745A420461CB600A51206 /* Model.xcdatamodeld in Sources */,
 				AD6D7AE4204C876E00752A33 /* EmployeeType.swift in Sources */,
+				ADF7201F20579FA0005FBE6C /* CompaniesController+FetchedResults.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

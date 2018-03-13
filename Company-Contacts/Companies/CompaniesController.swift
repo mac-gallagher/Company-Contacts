@@ -7,18 +7,24 @@
 //
 
 import UIKit
-
-class CompaniesController: UITableViewController, CreateCompanyControllerDelegate {
+import CoreData
+class CompaniesController: UITableViewController {
    
-    var companies = [Company]()
+    let fetchedResultsController: NSFetchedResultsController<Company> = {
+        let request: NSFetchRequest<Company> = Company.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: CoreDataManager.shared.context, sectionNameKeyPath: nil, cacheName: nil)
+        do {
+            try frc.performFetch()
+        } catch let fetchError {
+            print("Failed to fetch companies from persistent store:", fetchError)
+        }
+        return frc
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        do {
-            companies = try CoreDataManager.shared.fetchCompanies()
-        } catch let fetchError {
-            print("Failed to fetch companies from Core Data:", fetchError)
-        }
+        fetchedResultsController.delegate = self
         setupPlusButtonInNavBar(selector: #selector(handleAddCompany))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain
             , target: self, action: #selector(handleReset))
@@ -27,20 +33,25 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
     }
 
     @objc private func handleReset() {
+        guard let companies = fetchedResultsController.fetchedObjects else { return }
         if companies.count > 0 {
             let alertController = UIAlertController(title: "Delete All Companies", message: "Are you sure you want to remove all companies from the list? This action cannot be undone.", preferredStyle: .alert)
-            let deleteAction = UIAlertAction(title: "Delete All", style: .destructive) { (action) in
+            let deleteAction = UIAlertAction(title: "Delete All", style: .destructive) { (_) in
                 do {
                     try CoreDataManager.shared.deleteAllCompanies {
-                        var indexPathsToRemove = [IndexPath]()
-                        for (index, _) in self.companies.enumerated() {
-                            indexPathsToRemove.append(IndexPath(row: index, section: 0))
+                        do {
+                            try self.fetchedResultsController.performFetch()
+                            var indexPathsToRemove = [IndexPath]()
+                            for (index, _) in companies.enumerated() {
+                                indexPathsToRemove.append(IndexPath(row: index, section: 0))
+                            }
+                            self.tableView.deleteRows(at: indexPathsToRemove, with: .fade)
+                        } catch let fetchError {
+                            print("Failed to fetch companies from persistent store:", fetchError)
                         }
-                        self.companies.removeAll()
-                        self.tableView.deleteRows(at: indexPathsToRemove, with: .left)
                     }
                 } catch let deleteError {
-                    print("Unable to delete companies from Core Data:", deleteError)
+                    print("Failed to batch delete companies from persistent store:", deleteError)
                 }
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
@@ -53,7 +64,6 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
     @objc func handleAddCompany() {
         let createCompanyController = CreateCompanyController()
         let navController = CustomNavigationController(rootViewController: createCompanyController)
-        createCompanyController.delegate = self
         present(navController, animated: true, completion: nil)
     }
     
@@ -64,19 +74,6 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
         tableView.separatorColor = UIColor.lightBlue
         tableView.tableFooterView = UIView()
     }
-    
-    func didAddCompany(company: Company) {
-        companies.append(company)
-        let newIndexPath = IndexPath(row: companies.count - 1, section: 0)
-        tableView.insertRows(at: [newIndexPath], with: .automatic)
-    }
-    
-    func didEditCompany(company: Company) {
-        let row = companies.index(of: company)
-        let reloadIndexPath = IndexPath(row: row!, section: 0)
-        tableView.reloadRows(at: [reloadIndexPath], with: .middle)
-    }
-    
 }
 
 
