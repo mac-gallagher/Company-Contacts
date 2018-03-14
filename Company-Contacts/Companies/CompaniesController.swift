@@ -53,7 +53,14 @@ class CompaniesController: UITableViewController {
                             for (index, _) in companies.enumerated() {
                                 indexPathsToRemove.append(IndexPath(row: index, section: 0))
                             }
+                            
                             self.tableView.deleteRows(at: indexPathsToRemove, with: .fade)
+                            self.setupEmptyTableFooter()
+                            self.tableView.tableFooterView?.alpha = 0
+                            UIView.animate(withDuration: 0.3, delay: 0.3, options: [], animations: {
+                                self.tableView.tableFooterView?.alpha = 1
+                            }, completion: nil)
+                            
                         } catch let fetchError {
                             print("Failed to fetch companies from persistent store:", fetchError)
                         }

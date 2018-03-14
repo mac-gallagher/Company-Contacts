@@ -31,9 +31,9 @@ extension CompaniesController: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .insert:
-            tableView.insertRows(at: [newIndexPath!], with: .fade)
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
         case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .fade)
+            tableView.deleteRows(at: [indexPath!], with: .none)
         case .update:
             tableView.reloadRows(at: [indexPath!], with: .middle)
         case .move:
@@ -45,7 +45,7 @@ extension CompaniesController: NSFetchedResultsControllerDelegate {
         if fetchedCompaniesController.fetchedObjects?.count == 0 {
             setupEmptyTableFooter()
             tableView.tableFooterView?.alpha = 0
-            UIView.animate(withDuration: 0.3, delay: 0.3, options: [], animations: {
+            UIView.animate(withDuration: 0.3, delay: 0.35, options: [], animations: {
                 self.tableView.tableFooterView?.alpha = 1
             }, completion: nil)
         } else {
