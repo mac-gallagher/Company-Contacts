@@ -35,7 +35,11 @@ class EmployeesController: UITableViewController {
         super.viewDidLoad()
         fetchedEmployeesController.delegate = self
         tableView.backgroundColor = UIColor.darkBlue
-        tableView.tableFooterView = UIView()
+        if tableView.numberOfSections == 0 {
+            setupEmptyTableFooter()
+        } else {
+            tableView.tableFooterView = UIView()
+        }
         tableView.register(EmployeeCell.self, forCellReuseIdentifier: cellId)
         setupPlusButtonInNavBar(selector: #selector(handleAdd))
     }

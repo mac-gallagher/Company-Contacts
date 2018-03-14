@@ -24,12 +24,20 @@ class CompaniesController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        navigationItem.title = "Companies"
+        tableView.backgroundColor = .darkBlue
+        tableView.separatorColor = UIColor.lightBlue
+        if tableView.numberOfRows(inSection: 0) == 0 {
+            setupEmptyTableFooter()
+        } else {
+            tableView.tableFooterView = UIView()
+        }
         fetchedCompaniesController.delegate = self
         setupPlusButtonInNavBar(selector: #selector(handleAddCompany))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain
             , target: self, action: #selector(handleReset))
         tableView.register(CompanyCell.self, forCellReuseIdentifier: "cellId")
-        setupUI()
     }
 
     @objc private func handleReset() {
@@ -72,7 +80,11 @@ class CompaniesController: UITableViewController {
         navigationItem.title = "Companies"
         tableView.backgroundColor = .darkBlue
         tableView.separatorColor = UIColor.lightBlue
-        tableView.tableFooterView = UIView()
+        if tableView.numberOfSections == 0 {
+            setupEmptyTableFooter()
+        } else {
+            tableView.tableFooterView = UIView()
+        }
     }
 }
 

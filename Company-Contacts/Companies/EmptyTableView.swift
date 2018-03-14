@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EmptyTableFooter: UIView {
+class EmptyTableView: UIView {
     
     var topLabel: UILabel = {
         let label = UILabel()
@@ -56,7 +56,7 @@ class EmptyTableFooter: UIView {
         topLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
         bottomLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        bottomLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        bottomLabel.topAnchor.constraint(equalTo: topLabel.bottomAnchor, constant: 40).isActive = true
         
     }
 }

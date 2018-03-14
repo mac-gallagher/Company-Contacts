@@ -39,6 +39,9 @@ class CreateEmployeeController: UIViewController, UITextFieldDelegate {
     }
     
     @objc private func handleSave() {
+        nameTextField.resignFirstResponder()
+        birthdayTextField.resignFirstResponder()
+        
         guard let employeeName = nameTextField.text else { return }
         guard let company = company else { return }
         guard let birthdayText = birthdayTextField.text else { return }

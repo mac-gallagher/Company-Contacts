@@ -57,17 +57,6 @@ extension CompaniesController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footer = EmptyTableFooter()
-        footer.setUpperText(text: "No companies available")
-        footer.setLowerText(lines: ["Create some new companies by using the Add","button at the top"])
-        return footer
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return fetchedCompaniesController.fetchedObjects?.count == 0 ? 150 : 0
-    }
-    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
@@ -76,6 +65,13 @@ extension CompaniesController {
         return fetchedCompaniesController.fetchedObjects?.count ?? 0
     }
 
+    func setupEmptyTableFooter() {
+        let background = EmptyTableView()
+        background.setUpperText(text: "No companies available")
+        background.setLowerText(lines: ["Create some new companies by using the Add","button at the top"])
+        tableView.tableFooterView = background
+    }
+    
 }
 
 

@@ -6,7 +6,7 @@
 //  Copyright © 2018 Mac Gallagher. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import CoreData
 
 extension CompaniesController: NSFetchedResultsControllerDelegate {
@@ -35,13 +35,22 @@ extension CompaniesController: NSFetchedResultsControllerDelegate {
         case .delete:
             tableView.deleteRows(at: [indexPath!], with: .fade)
         case .update:
-            tableView.reloadRows(at: [indexPath!], with: .fade)
+            tableView.reloadRows(at: [indexPath!], with: .middle)
         case .move:
             tableView.moveRow(at: indexPath!, to: newIndexPath!)
         }
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        if fetchedCompaniesController.fetchedObjects?.count == 0 {
+            setupEmptyTableFooter()
+            tableView.tableFooterView?.alpha = 0
+            UIView.animate(withDuration: 0.3, delay: 0.3, options: [], animations: {
+                self.tableView.tableFooterView?.alpha = 1
+            }, completion: nil)
+        } else {
+            tableView.tableFooterView? = UIView()
+        }
         tableView.endUpdates()
     }
 }

@@ -60,6 +60,7 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
     }
     
     @objc private func handleSave() {
+        nameTextField.resignFirstResponder()
         if company == nil {
             dismiss(animated: true) {
                 self.createCompany()
