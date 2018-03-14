@@ -8,15 +8,9 @@
 
 import UIKit
 
-protocol CreateEmployeeControllerDelegate {
-    func didAddEmployee(employee: Employee)
-}
-
 class CreateEmployeeController: UIViewController, UITextFieldDelegate {
     
     var company: Company?
-    
-    var delegate: CreateEmployeeControllerDelegate?
     
     let nameLabel = UILabel()
     let nameTextField = UITextField()
@@ -49,28 +43,32 @@ class CreateEmployeeController: UIViewController, UITextFieldDelegate {
         guard let company = company else { return }
         guard let birthdayText = birthdayTextField.text else { return }
         
-        if birthdayText.isEmpty {
-            showError(title: "Add Birthday", message: "Please enter a birthday.")
-            return
-        }
+        //REMOVED FOR TESTING
+        
+//        if birthdayText.isEmpty {
+//            showError(title: "Add Birthday", message: "Please enter a birthday.")
+//            return
+//        }
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
         
-        guard let birthdayDate = dateFormatter.date(from: birthdayText) else {
-            showError(title: "Invalid Birthday", message: "Please enter a valid birthday.")
-            return
-        }
+        //REMOVED FOR TESTING
+        
+//        guard let birthdayDate = dateFormatter.date(from: birthdayText) else {
+//            showError(title: "Invalid Birthday", message: "Please enter a valid birthday.")
+//            return
+//        }
         
         guard let employeeType = employeeTypeSegmentedControl.titleForSegment(at: employeeTypeSegmentedControl.selectedSegmentIndex) else { return }
         
-        do {
-            let employee = try CoreDataManager.shared.createEmployee(employeeName: employeeName, employeeType: employeeType, company: company, birthday: birthdayDate)
-            dismiss(animated: true) {
-                self.delegate?.didAddEmployee(employee: employee)
-            }
-        } catch {
-            print("Failed to create employee in Core Data: ", error)
+        dismiss(animated: true) {
+        //REMOVED FOR TESTING
+            do {
+                try CoreDataManager.shared.createEmployee(employeeName: employeeName, employeeType: employeeType, company: company, birthday: Date())
+            } catch {
+                    print("Failed to create employee in Core Data: ", error)
+                }
         }
     }
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HeaderCell: UITableViewCell {
+class HeaderCell: UITableViewHeaderFooterView {
     
     let userIcon: UIImageView = {
         let imageView = UIImageView()
@@ -27,20 +27,23 @@ class HeaderCell: UITableViewCell {
         return label
     }()
     
-    init(title: String, icon: UIImage, imageFrame: CGRect, style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    init(title: String, icon: UIImage, imageFrame: CGRect, reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        
+        backgroundView = UIView(frame: self.bounds)
+        backgroundView?.backgroundColor = .lightBlue
+        
+        //must put all auto-layout constraints relative to background view now
         
         userIcon.image = icon
         nameLabel.text = title
-        
-        backgroundColor = .lightBlue
-        
+
         addSubview(userIcon)
         userIcon.heightAnchor.constraint(equalToConstant: imageFrame.height).isActive = true
         userIcon.widthAnchor.constraint(equalToConstant: imageFrame.width).isActive = true
         userIcon.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         userIcon.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        
+
         addSubview(nameLabel)
         nameLabel.leftAnchor.constraint(equalTo: userIcon.rightAnchor, constant: 16).isActive = true
         nameLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true

@@ -28,6 +28,7 @@
 		ADE94890204E608200329892 /* CreateCompanyController+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9488F204E608200329892 /* CreateCompanyController+UI.swift */; };
 		ADE94892204E89C600329892 /* CreateEmployeeController+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE94891204E89C600329892 /* CreateEmployeeController+UI.swift */; };
 		ADF7201F20579FA0005FBE6C /* CompaniesController+FetchedResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF7201E20579FA0005FBE6C /* CompaniesController+FetchedResults.swift */; };
+		ADF7202120586839005FBE6C /* EmployeesController+FetchedResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF7202020586839005FBE6C /* EmployeesController+FetchedResults.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		ADE9488F204E608200329892 /* CreateCompanyController+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateCompanyController+UI.swift"; sourceTree = "<group>"; };
 		ADE94891204E89C600329892 /* CreateEmployeeController+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateEmployeeController+UI.swift"; sourceTree = "<group>"; };
 		ADF7201E20579FA0005FBE6C /* CompaniesController+FetchedResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompaniesController+FetchedResults.swift"; sourceTree = "<group>"; };
+		ADF7202020586839005FBE6C /* EmployeesController+FetchedResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmployeesController+FetchedResults.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 			children = (
 				ADB2606D204A51CC00F5BDD8 /* EmployeesController.swift */,
 				ADE9488B204E4D8E00329892 /* EmployeesController+UITableView.swift */,
+				ADF7202020586839005FBE6C /* EmployeesController+FetchedResults.swift */,
 				AD23F9A2204A571F004967EC /* CreateEmployeeController.swift */,
 				ADE94891204E89C600329892 /* CreateEmployeeController+UI.swift */,
 				AD6D7AE3204C876E00752A33 /* EmployeeType.swift */,
@@ -209,6 +212,7 @@
 			files = (
 				AD735781205727E9005DF975 /* EmptyTableFooter.swift in Sources */,
 				ADE9488A204E39DE00329892 /* HeaderCell.swift in Sources */,
+				ADF7202120586839005FBE6C /* EmployeesController+FetchedResults.swift in Sources */,
 				ADB90006204504E3005D4036 /* UIColor+theme.swift in Sources */,
 				ADE9488C204E4D8E00329892 /* EmployeesController+UITableView.swift in Sources */,
 				AD0D06492056E7600035469A /* EmployeeCell.swift in Sources */,

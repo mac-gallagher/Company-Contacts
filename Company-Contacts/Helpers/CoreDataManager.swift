@@ -44,7 +44,11 @@ struct CoreDataManager {
     
     func deleteCompany(company: Company) throws {
         context.delete(company)
+        let employeesFetchRequest: NSFetchRequest<NSFetchRequestResult> = Employee.fetchRequest()
+            employeesFetchRequest.predicate = NSPredicate(format: "self.company == %@", company)
+        let employeesBatchDeleteRequest = NSBatchDeleteRequest(fetchRequest: employeesFetchRequest)
         do {
+            try context.execute(employeesBatchDeleteRequest)
             try context.save()
         } catch {
             throw error
@@ -52,9 +56,11 @@ struct CoreDataManager {
     }
     
     func deleteAllCompanies(completion: () -> ()) throws {
-        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: Company.fetchRequest())
+        let companyBatchDeleteRequest = NSBatchDeleteRequest(fetchRequest: Company.fetchRequest())
+        let employeesBatchDeleteRequest = NSBatchDeleteRequest(fetchRequest: Employee.fetchRequest())
         do {
-            try context.execute(batchDeleteRequest)
+            try context.execute(companyBatchDeleteRequest)
+            try context.execute(employeesBatchDeleteRequest)
             context.reset()
             completion()
         } catch {
@@ -62,29 +68,24 @@ struct CoreDataManager {
         }
     }
     
-    func createEmployee(employeeName: String, employeeType: String, company: Company, birthday: Date) throws -> Employee {
+    func createEmployee(employeeName: String, employeeType: String, company: Company, birthday: Date) throws {
         let employee = Employee(context: context)
         employee.company = company
         employee.type = employeeType
         employee.name = employeeName
-        
-        let employeeInformation = EmployeeInformation(context: context)
-        employee.employeeInformation = employeeInformation
-        employee.employeeInformation?.birthday = birthday
+        employee.birthday = birthday
         
         do {
             try context.save()
-            return employee
         } catch {
             throw error
         }
     }
     
-    func deleteEmployee(employee: Employee, completion: () -> ()) throws {
+    func deleteEmployee(employee: Employee) throws {
         context.delete(employee)
         do {
             try context.save()
-            completion()
         } catch {
             throw error
         }

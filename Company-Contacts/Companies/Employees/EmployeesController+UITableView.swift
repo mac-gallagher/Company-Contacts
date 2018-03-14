@@ -11,26 +11,26 @@ import UIKit
 extension EmployeesController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerTitle = employeeTypes[section]
-        return HeaderCell(title: headerTitle, icon: #imageLiteral(resourceName: "people"), imageFrame: CGRect(x: 0, y: 0, width: 35, height: 22), style: .default, reuseIdentifier: "headerId")
+        let headerTitle = fetchedEmployeesController.sections?[section].name ?? ""
+        return HeaderCell(title: headerTitle, icon: #imageLiteral(resourceName: "people"), imageFrame: CGRect(x: 0, y: 0, width: 35, height: 22), reuseIdentifier: "headerId")
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return allEmployees[section].count == 0 ? 0 : 50
+        return 50
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allEmployees[section].count
+        return fetchedEmployeesController.sections?[section].numberOfObjects ?? 0
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return allEmployees.count
+        return fetchedEmployeesController.sections?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! EmployeeCell
         cell.selectionStyle = .none
-        cell.employee = allEmployees[indexPath.section][indexPath.row]
+        cell.employee = fetchedEmployeesController.object(at: indexPath)
         return cell
     }
     
@@ -41,32 +41,25 @@ extension EmployeesController {
     }
     
     private func deleteHandlerFunction(action: UITableViewRowAction, indexPath: IndexPath) {
-        let employee = allEmployees[indexPath.section][indexPath.row]
+        let employee = fetchedEmployeesController.object(at: indexPath)
         do {
-            try CoreDataManager.shared.deleteEmployee(employee: employee) {
-                allEmployees[indexPath.section].remove(at: indexPath.row)
-                UIView.animate(withDuration: 0.3, delay: 0,
-                                           options: [], animations: {
-                    self.tableView.deleteRows(at: [indexPath], with: .automatic)
-                }, completion: { _ in
-                    self.tableView.reloadData()
-                })
-            }
+            try CoreDataManager.shared.deleteEmployee(employee: employee)
+//                UIView.animate(withDuration: 0.3, delay: 0,
+//                                           options: [], animations: {
+//                    self.tableView.deleteRows(at: [indexPath], with: .automatic)
+//                }, completion: { _ in
+//                    self.tableView.reloadData()
+//                })
+            
         } catch let deleteError {
-            print("Unable to delete employee from Core Data:", deleteError)
+            print("Unable to delete employee from persistent store:", deleteError)
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        var tableIsEmpty = true
-        for employeeType in allEmployees {
-            if employeeType.count != 0 {
-                tableIsEmpty = false
-                break
-            }
-        }
-        if tableIsEmpty && section == 0 {
+        if fetchedEmployeesController.fetchedObjects?.count == 0 && section == 0 {
             return 150
+            // NEED TO CREATE DUMMY SECTION
         }
         return 0
     }

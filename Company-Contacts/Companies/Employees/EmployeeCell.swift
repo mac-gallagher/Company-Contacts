@@ -13,7 +13,7 @@ class EmployeeCell: UITableViewCell {
     var employee: Employee? {
         didSet {
             nameLabel.text = employee?.name
-            if let birthday = employee?.employeeInformation?.birthday {
+            if let birthday = employee?.birthday {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "MMM dd, yyyy"
                 birthdayLabel.text = "\(dateFormatter.string(from: birthday))"

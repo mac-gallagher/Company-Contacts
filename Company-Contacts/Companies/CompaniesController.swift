@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 class CompaniesController: UITableViewController {
    
-    let fetchedResultsController: NSFetchedResultsController<Company> = {
+    let fetchedCompaniesController: NSFetchedResultsController<Company> = {
         let request: NSFetchRequest<Company> = Company.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: CoreDataManager.shared.context, sectionNameKeyPath: nil, cacheName: nil)
@@ -24,7 +24,7 @@ class CompaniesController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchedResultsController.delegate = self
+        fetchedCompaniesController.delegate = self
         setupPlusButtonInNavBar(selector: #selector(handleAddCompany))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain
             , target: self, action: #selector(handleReset))
@@ -33,14 +33,14 @@ class CompaniesController: UITableViewController {
     }
 
     @objc private func handleReset() {
-        guard let companies = fetchedResultsController.fetchedObjects else { return }
+        guard let companies = fetchedCompaniesController.fetchedObjects else { return }
         if companies.count > 0 {
             let alertController = UIAlertController(title: "Delete All Companies", message: "Are you sure you want to remove all companies from the list? This action cannot be undone.", preferredStyle: .alert)
             let deleteAction = UIAlertAction(title: "Delete All", style: .destructive) { (_) in
                 do {
                     try CoreDataManager.shared.deleteAllCompanies {
                         do {
-                            try self.fetchedResultsController.performFetch()
+                            try self.fetchedCompaniesController.performFetch()
                             var indexPathsToRemove = [IndexPath]()
                             for (index, _) in companies.enumerated() {
                                 indexPathsToRemove.append(IndexPath(row: index, section: 0))
