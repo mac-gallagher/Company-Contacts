@@ -43,11 +43,7 @@ extension CompaniesController: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         if fetchedCompaniesController.fetchedObjects?.count == 0 {
-            setupEmptyTableFooter()
-            tableView.tableFooterView?.alpha = 0
-            UIView.animate(withDuration: 0.3, delay: 0.35, options: [], animations: {
-                self.tableView.tableFooterView?.alpha = 1
-            }, completion: nil)
+            setupEmptyTableFooter(animate: true)
         } else {
             tableView.tableFooterView? = UIView()
         }

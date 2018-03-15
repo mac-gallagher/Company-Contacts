@@ -28,7 +28,6 @@ extension CreateEmployeeController {
         employeeTypeSegmentedControl.selectedSegmentIndex = 0
         employeeTypeSegmentedControl.tintColor = UIColor.darkBlue
       
-        setupCancelButton()
         performAutoLayout()
     }
     

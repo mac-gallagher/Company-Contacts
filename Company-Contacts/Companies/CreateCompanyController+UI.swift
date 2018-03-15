@@ -45,7 +45,6 @@ extension CreateCompanyController {
         companyImageView.isUserInteractionEnabled = true
         companyImageView.contentMode = .scaleAspectFill
         
-        setupCancelButton()
         performAutoLayout()
         setupCircularImageStyle()
     }

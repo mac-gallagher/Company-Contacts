@@ -51,11 +51,17 @@ extension EmployeesController {
         }
     }
     
-    func setupEmptyTableFooter() {
+    func setupEmptyTableFooter(animate: Bool) {
         let background = EmptyTableView()
         background.setUpperText(text: "No employees available")
         background.setLowerText(lines: ["Create some new employees by using the Add","button at the top"])
         tableView.tableFooterView = background
+        if animate {
+            tableView.tableFooterView?.alpha = 0
+            UIView.animate(withDuration: 0.3, delay: 0.35, options: [], animations: {
+                self.tableView.tableFooterView?.alpha = 1
+            }, completion: nil)
+        }
     }
     
     

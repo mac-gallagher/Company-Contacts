@@ -29,7 +29,7 @@ class CompaniesController: UITableViewController {
         tableView.backgroundColor = .darkBlue
         tableView.separatorColor = UIColor.lightBlue
         if tableView.numberOfRows(inSection: 0) == 0 {
-            setupEmptyTableFooter()
+            setupEmptyTableFooter(animate: false)
         } else {
             tableView.tableFooterView = UIView()
         }
@@ -43,7 +43,7 @@ class CompaniesController: UITableViewController {
     @objc private func handleReset() {
         guard let companies = fetchedCompaniesController.fetchedObjects else { return }
         if companies.count > 0 {
-            let alertController = UIAlertController(title: "Delete All Companies", message: "Are you sure you want to remove all companies from the list? This action cannot be undone.", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Delete All Companies", message: "Are you sure you want to remove all companies? This action cannot be undone.", preferredStyle: .alert)
             let deleteAction = UIAlertAction(title: "Delete All", style: .destructive) { (_) in
                 do {
                     try CoreDataManager.shared.deleteAllCompanies {
@@ -53,9 +53,8 @@ class CompaniesController: UITableViewController {
                             for (index, _) in companies.enumerated() {
                                 indexPathsToRemove.append(IndexPath(row: index, section: 0))
                             }
-                            
-                            self.tableView.deleteRows(at: indexPathsToRemove, with: .fade)
-                            self.setupEmptyTableFooter()
+                            self.tableView.deleteRows(at: indexPathsToRemove, with: .left)
+                            self.setupEmptyTableFooter(animate: true)
                             self.tableView.tableFooterView?.alpha = 0
                             UIView.animate(withDuration: 0.3, delay: 0.3, options: [], animations: {
                                 self.tableView.tableFooterView?.alpha = 1
@@ -82,17 +81,6 @@ class CompaniesController: UITableViewController {
         present(navController, animated: true, completion: nil)
     }
     
-    func setupUI() {
-        view.backgroundColor = .white
-        navigationItem.title = "Companies"
-        tableView.backgroundColor = .darkBlue
-        tableView.separatorColor = UIColor.lightBlue
-        if tableView.numberOfSections == 0 {
-            setupEmptyTableFooter()
-        } else {
-            tableView.tableFooterView = UIView()
-        }
-    }
 }
 
 

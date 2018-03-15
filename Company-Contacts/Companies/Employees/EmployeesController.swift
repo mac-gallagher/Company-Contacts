@@ -36,7 +36,7 @@ class EmployeesController: UITableViewController {
         fetchedEmployeesController.delegate = self
         tableView.backgroundColor = UIColor.darkBlue
         if tableView.numberOfSections == 0 {
-            setupEmptyTableFooter()
+            setupEmptyTableFooter(animate: false)
         } else {
             tableView.tableFooterView = UIView()
         }

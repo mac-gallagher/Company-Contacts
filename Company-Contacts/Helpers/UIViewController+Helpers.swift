@@ -14,14 +14,6 @@ extension UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "plus"), style: .plain, target: self, action: selector)
     }
     
-    func setupCancelButton() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancelModal))
-    }
-    
-    @objc func handleCancelModal() {
-        dismiss(animated: true, completion: nil)
-    }
-    
     func setupLightBlueBackgroundView(height: CGFloat) -> UIView {
         let lightBlueBackgroundView = UIView()
         lightBlueBackgroundView.backgroundColor = .lightBlue

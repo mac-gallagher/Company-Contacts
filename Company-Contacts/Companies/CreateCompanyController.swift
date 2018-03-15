@@ -34,6 +34,7 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
         saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
         navigationItem.rightBarButtonItem = saveButton
         selectImageButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectPhoto)))
@@ -60,7 +61,7 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
     }
     
     @objc private func handleSave() {
-        nameTextField.resignFirstResponder()
+        view.endEditing(true)
         if company == nil {
             dismiss(animated: true) {
                 self.createCompany()
@@ -70,6 +71,11 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
                 self.saveCompanyChanges()
             }
         }
+    }
+    
+    @objc func handleCancel() {
+        view.endEditing(true)
+        dismiss(animated: true, completion: nil)
     }
     
     @objc private func dateDidChange() {
@@ -125,7 +131,7 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.nameTextField.endEditing(true)
+        nameTextField.endEditing(true)
         datePicker.isUserInteractionEnabled = true
     }
 

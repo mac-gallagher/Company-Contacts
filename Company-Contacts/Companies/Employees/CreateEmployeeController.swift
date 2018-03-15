@@ -25,6 +25,7 @@ class CreateEmployeeController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancelModal))
         saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
         navigationItem.rightBarButtonItem = saveButton
         birthdayTextField.delegate = self
@@ -33,14 +34,12 @@ class CreateEmployeeController: UIViewController, UITextFieldDelegate {
         nameTextField.addTarget(self, action: #selector(nameFieldDidChange), for: UIControlEvents.editingChanged)
         birthdayTextField.keyboardType = .numbersAndPunctuation
         birthdayTextField.autocorrectionType = .no
-        
         nameFieldDidChange()
         setupUI()
     }
     
     @objc private func handleSave() {
-        nameTextField.resignFirstResponder()
-        birthdayTextField.resignFirstResponder()
+        view.endEditing(true)
         
         guard let employeeName = nameTextField.text else { return }
         guard let company = company else { return }
@@ -75,6 +74,12 @@ class CreateEmployeeController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    @objc func handleCancelModal() {
+        view.endEditing(true)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == birthdayTextField {
             let maxLength = 10
@@ -106,8 +111,7 @@ class CreateEmployeeController: UIViewController, UITextFieldDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+        view.endEditing(true)
     }
-    
     
 }
