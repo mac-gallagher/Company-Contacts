@@ -46,8 +46,9 @@ class CompaniesController: UITableViewController {
     }
     
     @objc private func handleRefresh() {
-        Service.shared.downloadCompaniesFromServer()
-        refreshControl?.endRefreshing()
+        Service.shared.downloadCompaniesFromServer() {
+            self.refreshControl?.endRefreshing()
+        }
     }
 
     @objc private func handleReset() {

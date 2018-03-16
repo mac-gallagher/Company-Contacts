@@ -15,7 +15,7 @@ struct Service {
     
     let urlString = "https://api.letsbuildthatapp.com/intermediate_training/companies"
     
-    func downloadCompaniesFromServer() {
+    func downloadCompaniesFromServer(completion: @escaping () -> ()) {
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { (data, resp, err) in
             
@@ -43,14 +43,14 @@ struct Service {
                     let foundedDate = dateFormatter.date(from: jsonCompany.founded)
                     company.founded = foundedDate
                     
-                    if let photoUrl = URL(string: jsonCompany.photoUrl) {
-                        do {
-                            let data = try Data(contentsOf: photoUrl)
-                            company.imageData = data
-                        } catch {
-                            print("Failed to download image data for JSON company")
-                        }
-                    }
+//                    if let photoUrl = URL(string: jsonCompany.photoUrl) {
+//                        do {
+//                            let data = try Data(contentsOf: photoUrl)
+//                            company.imageData = data
+//                        } catch {
+//                            print("Failed to download image data for JSON company")
+//                        }
+//                    }
                     
                     jsonCompany.employees?.forEach({ (jsonEmployee) in
                         let employee = Employee(context: privateContext)
@@ -72,6 +72,9 @@ struct Service {
                 print("Failed to decode JSON companies:", jsonDecodeErr)
             }
             }.resume()
+        DispatchQueue.main.async {
+            completion()
+        }
     }
     
 }

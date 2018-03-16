@@ -68,6 +68,23 @@ struct CoreDataManager {
         }
     }
     
+    func containsCompany(with name: String) -> Bool {
+        let request: NSFetchRequest<Company> = Company.fetchRequest()
+        request.predicate = NSPredicate(format: "name ==[cd] %@", name)
+        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: CoreDataManager.shared.context, sectionNameKeyPath: nil, cacheName: nil)
+        do {
+            try frc.performFetch()
+        } catch let fetchError {
+            print("Failed to fetch companies from persistent store:", fetchError)
+        }
+        let companies = frc.fetchedObjects
+        if let companiesWithName = companies {
+            return companiesWithName.count > 0
+        }
+        return true
+    }
+    
     func createEmployee(employeeName: String, employeeType: String, company: Company, birthday: Date) throws {
         let employee = Employee(context: context)
         employee.company = company

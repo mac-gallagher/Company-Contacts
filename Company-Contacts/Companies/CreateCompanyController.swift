@@ -63,13 +63,16 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
     @objc private func handleSave() {
         view.endEditing(true)
         if company == nil {
-            dismiss(animated: true) {
-                self.createCompany()
+            guard let name = nameTextField.text else { return }
+            if CoreDataManager.shared.containsCompany(with: name) {
+                let alert = UIAlertController(title: "Company Already Exists", message: "Please enter another name.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                present(alert, animated: true, completion: nil)
+            } else {
+            self.createCompany()
             }
         } else {
-            dismiss(animated: true) {
-                self.saveCompanyChanges()
-            }
+            self.saveCompanyChanges()
         }
     }
     
@@ -99,10 +102,13 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
             let imageData = UIImageJPEGRepresentation(image, 0.8)
             else { return }
         
-        do {
-            try CoreDataManager.shared.createCompany(companyName: name, foundedDate: self.datePicker.date, imageData: imageData)
-        } catch let createError{
-            print("Failed to create company in Core Data:", createError)
+            dismiss(animated: true) {
+                do {
+                    try CoreDataManager.shared.createCompany(companyName: name, foundedDate: self.datePicker.date, imageData: imageData)
+                } catch let createError{
+                    print("Failed to create company in Core Data:", createError)
+                    
+                }
         }
     }
     
@@ -114,11 +120,13 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
             let imageData = UIImageJPEGRepresentation(companyImage, 0.8)
             company?.imageData = imageData
         }
-        do {
-            try CoreDataManager.shared.saveCompanies()
-            } catch let saveError {
-                print("Failed to update company changes:", saveError)
-            }
+        dismiss(animated: true) {
+            do {
+                try CoreDataManager.shared.saveCompanies()
+                } catch let saveError {
+                    print("Failed to update company changes:", saveError)
+                }
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
