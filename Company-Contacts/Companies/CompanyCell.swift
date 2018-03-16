@@ -38,7 +38,7 @@ class CompanyCell: UITableViewCell {
         imageView.clipsToBounds = true
         imageView.layer.borderColor = UIColor.darkBlue.cgColor
         imageView.layer.borderWidth = 1
-        
+        imageView.backgroundColor = .white
         return imageView
     }()
     

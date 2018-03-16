@@ -38,6 +38,16 @@ class CompaniesController: UITableViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain
             , target: self, action: #selector(handleReset))
         tableView.register(CompanyCell.self, forCellReuseIdentifier: "cellId")
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        refreshControl.tintColor = .white
+        self.refreshControl = refreshControl
+    }
+    
+    @objc private func handleRefresh() {
+        Service.shared.downloadCompaniesFromServer()
+        refreshControl?.endRefreshing()
     }
 
     @objc private func handleReset() {

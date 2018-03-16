@@ -54,6 +54,7 @@ extension CreateCompanyController {
         companyImageView.clipsToBounds = true
         companyImageView.layer.borderColor = UIColor.darkBlue.cgColor
         companyImageView.layer.borderWidth = 1
+        companyImageView.backgroundColor = .white
     }
     
     func performAutoLayout() {

@@ -33,7 +33,7 @@ extension CompaniesController: NSFetchedResultsControllerDelegate {
         case .insert:
             tableView.insertRows(at: [newIndexPath!], with: .automatic)
         case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .none)
+            tableView.deleteRows(at: [indexPath!], with: .fade)
         case .update:
             tableView.reloadRows(at: [indexPath!], with: .middle)
         case .move:

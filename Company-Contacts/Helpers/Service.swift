@@ -2,9 +2,10 @@
 //  Service.swift
 //  Company-Contacts
 //
-//  Created by Mac Gallagher on 3/12/18.
+//  Created by Mac Gallagher on 3/15/18.
 //  Copyright © 2018 Mac Gallagher. All rights reserved.
 //
+
 import Foundation
 import CoreData
 
@@ -15,15 +16,11 @@ struct Service {
     let urlString = "https://api.letsbuildthatapp.com/intermediate_training/companies"
     
     func downloadCompaniesFromServer() {
-        print("Attempting to download companies")
-        
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { (data, resp, err) in
             
-            print("Finished downloading")
-            
             if let err = err {
-                print("Failed to download companies:", err)
+                print("Failed to download JSON companies:", err)
                 return
             }
             
@@ -34,33 +31,32 @@ struct Service {
             do {
                 let jsonCompanies = try jsonDecoder.decode([JSONCompany].self, from: data)
                 
-                //since URLSession runs on background thread need private context
                 let privateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-                
                 privateContext.parent = CoreDataManager.shared.context
                 
                 jsonCompanies.forEach({ (jsonCompany) in
-                    print(jsonCompany.name)
-                    
                     let company = Company(context: privateContext)
                     company.name = jsonCompany.name
                     
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "MM/dd/yyyy"
                     let foundedDate = dateFormatter.date(from: jsonCompany.founded)
-                    
                     company.founded = foundedDate
                     
+                    if let photoUrl = URL(string: jsonCompany.photoUrl) {
+                        do {
+                            let data = try Data(contentsOf: photoUrl)
+                            company.imageData = data
+                        } catch {
+                            print("Failed to download image data for JSON company")
+                        }
+                    }
+                    
                     jsonCompany.employees?.forEach({ (jsonEmployee) in
-                        print("  \(jsonEmployee.name)")
-                        
                         let employee = Employee(context: privateContext)
                         employee.name = jsonEmployee.name
                         employee.type = jsonEmployee.type
-                        let employeeInformation = EmployeeInformation(context: privateContext)
-                        let birthdayDate = dateFormatter.date(from: jsonEmployee.birthday)
-                        employeeInformation.birthday = birthdayDate
-                        employee.employeeInformation = employeeInformation
+                        employee.birthday = dateFormatter.date(from: jsonEmployee.birthday)
                         employee.company = company
                     })
                     
@@ -68,14 +64,13 @@ struct Service {
                         try privateContext.save()
                         try privateContext.parent?.save()
                     } catch let saveErr{
-                        print("Failed to save companies:", saveErr)
+                        print("Failed to save JSON companies to persistent store:", saveErr)
                     }
                 })
                 
             } catch let jsonDecodeErr{
-                print("Failed to decode:", jsonDecodeErr)
+                print("Failed to decode JSON companies:", jsonDecodeErr)
             }
-
             }.resume()
     }
     
@@ -83,6 +78,7 @@ struct Service {
 
 struct JSONCompany: Decodable {
     let name: String
+    let photoUrl: String
     let founded: String
     var employees: [JSONEmployee]?
 }
@@ -91,5 +87,8 @@ struct JSONEmployee: Decodable {
     let name: String
     let type: String
     let birthday: String
-    
 }
+
+
+
+
