@@ -35,46 +35,55 @@ struct Service {
                 privateContext.parent = CoreDataManager.shared.context
                 
                 jsonCompanies.forEach({ (jsonCompany) in
-                    let company = Company(context: privateContext)
-                    company.name = jsonCompany.name
-                    
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "MM/dd/yyyy"
-                    let foundedDate = dateFormatter.date(from: jsonCompany.founded)
-                    company.founded = foundedDate
-                    
-//                    if let photoUrl = URL(string: jsonCompany.photoUrl) {
-//                        do {
-//                            let data = try Data(contentsOf: photoUrl)
-//                            company.imageData = data
-//                        } catch {
-//                            print("Failed to download image data for JSON company")
-//                        }
-//                    }
-                    
-                    jsonCompany.employees?.forEach({ (jsonEmployee) in
-                        let employee = Employee(context: privateContext)
-                        employee.name = jsonEmployee.name
-                        employee.type = jsonEmployee.type
-                        employee.birthday = dateFormatter.date(from: jsonEmployee.birthday)
-                        employee.company = company
-                    })
-                    
-                    do {
-                        try privateContext.save()
-                        try privateContext.parent?.save()
-                    } catch let saveErr{
-                        print("Failed to save JSON companies to persistent store:", saveErr)
+                    if CoreDataManager.shared.containsCompany(with: jsonCompany.name) == false {
+                        self.createCompanyFromJsonCompany(privateContext: privateContext, jsonCompany: jsonCompany)
                     }
                 })
+                
+                do {
+                    try privateContext.save()
+                    try privateContext.parent?.save()
+                } catch let saveErr{
+                    print("Failed to save JSON companies to persistent store:", saveErr)
+                }
+                
+                DispatchQueue.main.async {
+                    completion()
+                }
                 
             } catch let jsonDecodeErr{
                 print("Failed to decode JSON companies:", jsonDecodeErr)
             }
             }.resume()
-        DispatchQueue.main.async {
-            completion()
+    }
+    
+    private func createCompanyFromJsonCompany(privateContext: NSManagedObjectContext, jsonCompany: JSONCompany) {
+        let company = Company(context: privateContext)
+        company.name = jsonCompany.name
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        let foundedDate = dateFormatter.date(from: jsonCompany.founded)
+        company.founded = foundedDate
+        
+        // STORE AND CACHE IMAGES USING SDWEBIMAGE
+        if let photoUrl = URL(string: jsonCompany.photoUrl) {
+            do {
+                let data = try Data(contentsOf: photoUrl)
+                company.imageData = data
+            } catch {
+                print("Failed to download image data for JSON company")
+            }
         }
+        
+        jsonCompany.employees?.forEach({ (jsonEmployee) in
+            let employee = Employee(context: privateContext)
+            employee.name = jsonEmployee.name
+            employee.type = jsonEmployee.type
+            employee.birthday = dateFormatter.date(from: jsonEmployee.birthday)
+            employee.company = company
+        })
+        
     }
     
 }

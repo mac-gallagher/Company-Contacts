@@ -33,8 +33,6 @@ class HeaderCell: UITableViewHeaderFooterView {
         backgroundView = UIView(frame: self.bounds)
         backgroundView?.backgroundColor = .lightBlue
         
-        //must put all auto-layout constraints relative to background view now
-        
         userIcon.image = icon
         nameLabel.text = title
 

@@ -20,7 +20,7 @@ class EmployeesController: UITableViewController {
             request.predicate = NSPredicate(format: "self.company == %@", company)
         }
         let primarySortDescriptor = NSSortDescriptor(key: "type", ascending: true)
-        let secondarySortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        let secondarySortDescriptor = NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.caseInsensitiveCompare))
         request.sortDescriptors = [primarySortDescriptor, secondarySortDescriptor]
         let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: CoreDataManager.shared.context, sectionNameKeyPath: "type", cacheName: nil)
         do {

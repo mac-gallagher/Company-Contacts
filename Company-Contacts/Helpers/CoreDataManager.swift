@@ -61,7 +61,7 @@ struct CoreDataManager {
         do {
             try context.execute(companyBatchDeleteRequest)
             try context.execute(employeesBatchDeleteRequest)
-            context.reset()
+            try context.save()
             completion()
         } catch {
             throw error

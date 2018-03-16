@@ -16,6 +16,7 @@ class CreateEmployeeController: UIViewController, UITextFieldDelegate {
     let nameTextField = UITextField()
     let birthdayLabel = UILabel()
     let birthdayTextField = UITextField()
+    let datePicker = UIDatePicker()
     let employeeTypeSegmentedControl = UISegmentedControl(items:
         [EmployeeType.Executive.rawValue,
         EmployeeType.SeniorManagement.rawValue,

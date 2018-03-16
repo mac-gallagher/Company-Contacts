@@ -5,6 +5,16 @@
 //  Created by Mac Gallagher on 2/26/18.
 //  Copyright © 2018 Mac Gallagher. All rights reserved.
 //
+////////////////////////////////////////////////
+// TO DO
+////////////////////////////////////////////////
+//
+// - Bug fix: If a name is changed and subsequently needs to be reordered, the order changes but not the name
+// - Custom date picker
+// - For JSON companies, load and cache images using SDWebImage
+// - Fix refresh control in companies tableView
+// - Bug fix: JSON Apple company does not get removed from Core Data for some reason (maybe do batch update instead?)
+//
 
 import UIKit
 import CoreData
@@ -12,7 +22,8 @@ class CompaniesController: UITableViewController {
    
     let fetchedCompaniesController: NSFetchedResultsController<Company> = {
         let request: NSFetchRequest<Company> = Company.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.caseInsensitiveCompare))
+        request.sortDescriptors = [sortDescriptor]
         let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: CoreDataManager.shared.context, sectionNameKeyPath: nil, cacheName: nil)
         do {
             try frc.performFetch()
@@ -66,11 +77,6 @@ class CompaniesController: UITableViewController {
                             }
                             self.tableView.deleteRows(at: indexPathsToRemove, with: .left)
                             self.setupEmptyTableFooter(animate: true)
-                            self.tableView.tableFooterView?.alpha = 0
-                            UIView.animate(withDuration: 0.3, delay: 0.3, options: [], animations: {
-                                self.tableView.tableFooterView?.alpha = 1
-                            }, completion: nil)
-                            
                         } catch let fetchError {
                             print("Failed to fetch companies from persistent store:", fetchError)
                         }

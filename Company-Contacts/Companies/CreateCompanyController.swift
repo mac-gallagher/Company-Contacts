@@ -61,19 +61,27 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
     }
     
     @objc private func handleSave() {
+        guard let name = nameTextField.text else { return }
+        if CoreDataManager.shared.containsCompany(with: name) {
+            presentDuplicateCompanyError()
+            return
+        }
         view.endEditing(true)
         if company == nil {
-            guard let name = nameTextField.text else { return }
-            if CoreDataManager.shared.containsCompany(with: name) {
-                let alert = UIAlertController(title: "Company Already Exists", message: "Please enter another name.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                present(alert, animated: true, completion: nil)
-            } else {
-            self.createCompany()
+            dismiss(animated: true) {
+                self.createCompany()
             }
         } else {
-            self.saveCompanyChanges()
+            dismiss(animated: true) {
+                self.saveCompanyChanges()
+            }
         }
+    }
+    
+    private func presentDuplicateCompanyError() {
+        let alert = UIAlertController(title: "Company Already Exists", message: "Please enter another name.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
     @objc func handleCancel() {
@@ -101,14 +109,10 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
             let image = companyImageView.image,
             let imageData = UIImageJPEGRepresentation(image, 0.8)
             else { return }
-        
-            dismiss(animated: true) {
-                do {
-                    try CoreDataManager.shared.createCompany(companyName: name, foundedDate: self.datePicker.date, imageData: imageData)
-                } catch let createError{
-                    print("Failed to create company in Core Data:", createError)
-                    
-                }
+        do {
+            try CoreDataManager.shared.createCompany(companyName: name, foundedDate: self.datePicker.date, imageData: imageData)
+        } catch let createError{
+            print("Failed to create company in Core Data:", createError)
         }
     }
     
@@ -120,12 +124,10 @@ class CreateCompanyController: UIViewController, UITextFieldDelegate {
             let imageData = UIImageJPEGRepresentation(companyImage, 0.8)
             company?.imageData = imageData
         }
-        dismiss(animated: true) {
-            do {
-                try CoreDataManager.shared.saveCompanies()
-                } catch let saveError {
-                    print("Failed to update company changes:", saveError)
-                }
+        do {
+            try CoreDataManager.shared.saveCompanies()
+        } catch let saveError {
+            print("Failed to update company changes:", saveError)
         }
     }
     
